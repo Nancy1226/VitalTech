@@ -1,0 +1,8 @@
+.error{
+    color: #e92b2d;
+    font-weight: 600;
+    font-size: 1.2rem;
+    font-family: 'Inter';
+    line-height: normal;
+    text-align: right;
+}
