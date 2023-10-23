@@ -64,7 +64,6 @@ function FormLogin() {
                   <Title msn={"Inicio de sesion"} />
                   <Label
                     txt={"Signos vitales"}
-                    estilo={true}
                     color={true}
                     grosor={true}
                     aling={true}

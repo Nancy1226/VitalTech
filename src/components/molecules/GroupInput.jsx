@@ -2,12 +2,12 @@ import styled from "styled-components";
 import Label from "../atoms/Label";
 import Input from "../atoms/Input";
 
-function GroupInput({ type, name, id, dato, pattern, valor, txt, onBlur}) {
+function GroupInput({ type, name, dato, pattern, valor, txt, onBlur}) {
     return (     
     <>
     <StyledContainerInput>
 
-        <Label txt={txt} estilo={false} color={false} grosor={false} aling={false} />
+        <Label txt={txt} color={false} grosor={false} aling={false} />
 
         <Input type={type}
         name={name}

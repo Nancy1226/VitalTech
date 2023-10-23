@@ -30,7 +30,7 @@ const StyledButton = styled.button`
     background: #075BBB;
     text-align: center;
     font-family: 'Inter';
-    font-size: 1.6rem;
+    font-size: 1.6em;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
