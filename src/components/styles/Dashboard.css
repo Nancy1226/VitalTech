@@ -96,8 +96,8 @@ aside .toggle .logo{
 }
 
 aside .toggle .logo img{
-    width: 2rem;
-    height: 2rem;
+    width: 100%;
+    height: 20%;
 }
 
 aside .toggle .close{

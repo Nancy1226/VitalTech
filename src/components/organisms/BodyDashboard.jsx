@@ -1,29 +1,28 @@
 import GroupCards from "../molecules/GroupCards";
-
+import GraphicGroup from "../molecules/GraphicGroup";
 function BodyDashboard() {
     return (
       <>
         <main>
           <h1>Graficas de cada uno</h1>
-
           <div class="analyse">
             <div class="sales">
               <GroupCards
-                title={"Total sales"}
+                title={"Temperatura Corporal"}
                 info={"$65,024"}
                 porcentaje={"81%"}
               />
             </div>
             <div class="visits">
               <GroupCards
-                title={"Searches"}
+                title={"Pulsaciones por minuto"}
                 info={"14,147"}
                 porcentaje={"21%"}
               />
             </div>
             <div class="searches">
               <GroupCards
-                title={"Site Visit"}
+                title={"Oxígeno en sangre"}
                 info={"24,981"}
                 porcentaje={"48%"}
               />
@@ -34,23 +33,27 @@ function BodyDashboard() {
           {/* <!-- Section graficas --> */}
 
           <div class="new-users">
-            <h2>Grafica general</h2>
-
-            <div class="user-list"></div>
+            <h2>Gráficas</h2>
+            <div class="user-list">
+             {/* <Graphic/> */}
+             <GraphicGroup graphicName={"Frecuencia Cardiaca"} color={"#367a9d"}/>
+             <GraphicGroup graphicName={"Oxígeno en sangre"} color={"#1865d7"}/>
+            </div>
           </div>
 
           {/* <!-- Section graficas --> */}
 
           {/* <!-- Cardsssss tabla de info--> */}
           <div class="recent-orders">
-            <h2>Sensores</h2>
+            <h2>Historial de mediciones</h2>
             <table>
               <thead>
                 <tr>
-                  <th>Sensor uno</th>
-                  <th>Sensor dos</th>
-                  <th>Sensor tres</th>
-                  <th>Sensor cuatro</th>
+                  <th>Frecuencia cardiaca</th>
+                  <th>Oxígeno en sangre</th>
+                  <th>Temperatura</th>
+                  <th>Presion arterial</th>
+                  <th>Fecha</th>
                   <th></th>
                 </tr>
               </thead>
@@ -58,11 +61,11 @@ function BodyDashboard() {
               {/* tabla para el historial */}
               <tbody>
                 <tr>
-                  <td>1</td>
-                  <td>2</td>
-                  <td>3</td>
-                  <td>6</td>
-                  <td class="primary">Details</td>
+                  <td>98</td>
+                  <td>98%</td>
+                  <td>30 °C</td>
+                  <td>124</td>
+                  <td>02/03/2023</td>
                 </tr>
               </tbody>
 
