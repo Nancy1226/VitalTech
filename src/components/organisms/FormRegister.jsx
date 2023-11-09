@@ -101,7 +101,7 @@ function FormRegister({dato, valor}) {
           </StyledContainerForm>
 
           <StyledContainerImg>
-            <Img src={images.login} />
+            <Img src={images.register} />
           </StyledContainerImg>
         </StyledContainer>
       </>

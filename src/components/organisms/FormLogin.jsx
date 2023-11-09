@@ -70,7 +70,7 @@ function FormLogin() {
                   />
 
                   <StyledContainerIcon>
-                    <Img src={images.heart} />
+                    <Img src={images.heart} /> 
                   </StyledContainerIcon>
 
                   <GroupInput
