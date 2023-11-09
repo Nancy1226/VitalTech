@@ -1,12 +1,12 @@
-
+import logo from "../../assets/VitalLogo.png"
+import { NavLink } from "react-router-dom";
 function Navbar() {
     return ( 
     <>
     <aside>
             <div class="toggle">
                 <div class="logo">
-                    <img src="images/logo.png" />
-                    <h2>Vital<span class="danger">Tech</span></h2>
+                    <img src={logo} />
                 </div>
                 <div class="close" id="close-btn">
                     <span class="material-icons-sharp">
@@ -16,18 +16,20 @@ function Navbar() {
             </div>
 
             <div class="sidebar">
-                <a href="#">
+                    <NavLink to={"/home"} exact activeClassName="active">
                     <span class="material-icons-sharp">
                         dashboard
                     </span>
-                    <h3>Dashboard</h3>
-                </a>
-                <a href="#" class="active">
+                    <h3>Medir</h3>
+                    </NavLink>
+                    
+                
+                    <NavLink to={"/dashboard"} exact activeClassName="active">
                     <span class="material-icons-sharp">
                         insights
                     </span>
                     <h3>Analytics</h3>
-                </a>
+                </NavLink>
                 <a href="#">
                     <span class="material-icons-sharp">
                         settings

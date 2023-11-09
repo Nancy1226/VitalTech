@@ -83,7 +83,7 @@ function FormLogin() {
                   />
                 {touched.email && errors.email && <div className="error">{errors.email}</div>}
 
-                  <GroupInput
+                  <GroupInput 
                     txt={"Contraseña"}
                     type={"password"}
                     name="password"
