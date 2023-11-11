@@ -24,6 +24,7 @@
 
 .dark-mode-variables{
     --color-background: #181a1e;
+    background: #181a1e;
     --color-white: #202528;
     --color-dark: #edeffd;
     --color-dark-variant: #a3bdcc;
