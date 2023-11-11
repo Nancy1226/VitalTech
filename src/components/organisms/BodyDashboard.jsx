@@ -4,7 +4,6 @@ function BodyDashboard() {
     return (
       <>
         <main>
-          <h1>Graficas de cada uno</h1>
           <div class="analyse">
             <div class="sales">
               <GroupCards
@@ -42,37 +41,6 @@ function BodyDashboard() {
           </div>
 
           {/* <!-- Section graficas --> */}
-
-          {/* <!-- Cardsssss tabla de info--> */}
-          <div class="recent-orders">
-            <h2>Historial de mediciones</h2>
-            <table>
-              <thead>
-                <tr>
-                  <th>Frecuencia cardiaca</th>
-                  <th>Oxígeno en sangre</th>
-                  <th>Temperatura</th>
-                  <th>Presion arterial</th>
-                  <th>Fecha</th>
-                  <th></th>
-                </tr>
-              </thead>
-
-              {/* tabla para el historial */}
-              <tbody>
-                <tr>
-                  <td>98</td>
-                  <td>98%</td>
-                  <td>30 °C</td>
-                  <td>124</td>
-                  <td>02/03/2023</td>
-                </tr>
-              </tbody>
-
-            </table>
-            <a href="#">Show All</a>
-          </div>
-
         </main>
       </>
     );
