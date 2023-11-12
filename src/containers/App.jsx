@@ -34,6 +34,7 @@ function App() {
           <Route element={<RouteProtected session={isLoged}/>}>
             <Route path='/home' element={<Home/>}></Route>
             <Route path='/dashboard' element={<Dashboard />} ></Route>
+            <Route path='/history' element={<Dashboard />} ></Route>
           </Route>
 
           <Route path="/*" element={<NotFound/>} />
