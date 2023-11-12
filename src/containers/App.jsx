@@ -8,6 +8,7 @@ import Register from '../pages/Register'
 import Dashboard from '../pages/Dashboard'
 import NotFound from '../pages/NotFound'
 import FormA from '../components/organisms/FormA'
+import History from '../pages/History'
 
 function App() {
   const [isLoged, setIsLoged] = useState(
