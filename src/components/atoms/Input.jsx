@@ -24,7 +24,7 @@ const StyledInput = styled(Field)`
     border-radius: 8px;
     border: 1px solid #D9D9D9;
     background: #FFF;
-    font-size: 1.7em;
+    font-size: 1.36em;
     font-family: 'Inter';
     font-style: normal;
     font-weight: 250;

@@ -15,7 +15,7 @@ const StyledLabel = styled.p`
     font-family: 'Inter';
     font-size: 1.4em;
     font-style: normal;
-    font-weight:${props => props.grosor ? '400' : '650'};
+    font-weight:${props => props.grosor ? '400' : '400'};
     line-height: normal;
     text-align:${props => props.aling ? 'center' : 'left'};
 `;

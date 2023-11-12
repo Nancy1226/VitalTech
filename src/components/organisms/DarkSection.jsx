@@ -7,7 +7,7 @@ function DarkSection() {
   const handleDarkModeToggle = () => {
     setDarkModeActive(!darkModeActive);
     document.body.classList.toggle('dark-mode-variables');
-    
+
   };
 
     return (
