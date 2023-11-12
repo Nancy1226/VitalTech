@@ -30,12 +30,13 @@ function Navbar() {
                     </span>
                     <h3>Analytics</h3>
                 </NavLink>
-                <a href="#">
+                <NavLink to={"/history"} exact activeClassName="active">
                     <span class="material-icons-sharp">
                         settings
                     </span>
-                    <h3>Settings</h3>
-                </a>
+                    <h3>Historial</h3>
+                </NavLink>
+                
                 <a href="#">
                     <span class="material-icons-sharp">
                         logout

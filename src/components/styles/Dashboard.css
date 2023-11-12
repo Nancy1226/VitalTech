@@ -665,3 +665,11 @@ main .recent-orders a{
     }
 
 }
+
+.Export{
+    display: block;
+    width: fit-content;
+    height: fit-content;
+    margin: 2px solid red;
+    color: blue;
+}
