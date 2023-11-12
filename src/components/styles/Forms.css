@@ -1,8 +1,28 @@
 .error{
     color: #e92b2d;
-    font-weight: 600;
+    font-weight: 400;
     font-size: 1.2rem;
     font-family: 'Inter';
     line-height: normal;
-    text-align: right;
+    text-align: center;
+}
+
+.container-group{
+    margin-top: 4%;
+}
+
+.link{
+    color: #000;
+    font-family: 'Inter';
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.span{
+    color:#014BA0;
+    font-weight: 600;
+    text-decoration:underline;
+    /* border: 2px solid rebeccapurple; */
 }
