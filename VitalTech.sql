@@ -9,3 +9,5 @@ email varchar(100) not null,
 password varchar(100) not null
 );
 show tables;
+TRUNCATE TABLE user;
+select * from user;

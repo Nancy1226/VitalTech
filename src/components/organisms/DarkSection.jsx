@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../styles/Dashboard.css'
-
+import {useContext} from "react";
+// import 
 function DarkSection() {
     const [darkModeActive, setDarkModeActive] = useState(false);
 

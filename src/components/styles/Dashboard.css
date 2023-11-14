@@ -671,9 +671,14 @@ main .recent-orders a{
 }
 
 .Export{
+    margin: 2% 0%;
     display: block;
     width: fit-content;
     height: fit-content;
     margin: 2px solid red;
     color: blue;
+}
+.Export:hover{
+    cursor: pointer;
+    
 }

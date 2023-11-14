@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
-import { useState, useContext} from 'react';
+import { useState, useContext, useRef} from 'react';
+import ReCAPTCHA from "react-google-recaptcha";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import Title from "../atoms/Title";
@@ -18,6 +19,13 @@ function FormLogin() {
   const { setIsLoged } = useContext(UserContext);
   const { setUserName } = useContext(UserContext);
   const navigate = useNavigate();
+  const captcha = useRef(null);
+
+  const onChange = () =>{
+    if(captcha.current.getValue()){
+      console.log("El usuario no es un robot")
+    }
+  }
 
     return (
       <>
@@ -26,18 +34,18 @@ function FormLogin() {
             <Formik
               initialValues={{
                 email: " ",
-                password: " ",
+                password: "",
               }}
 
-              validate={(valores)=>{ //funcion para validar el forumario
+              validate={(values)=>{ //funcion para validar el forumario
                 let errores = {};
 
                 //validacion correo
-                if (!valores.email) {
+                if (!values.email) {
                   errores.email = "Por favor ingresa un correo";
                 } else if (
                   !/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/.test(
-                    valores.email
+                    values.email
                   )
                 ) {
                   errores.email =
@@ -45,17 +53,9 @@ function FormLogin() {
                 }
 
                 //validacion contraseña
-                if (!valores.password) {
+                if (!values.password) {
                   errores.password = "Por favor ingresa una contraseña";
                 } 
-                // else if (
-                //   !/^[a-zA-ZÀ-ÿ\s]{1,40}$/.test(
-                //     valores.password
-                //   )
-                // ) {
-                //   errores.password =
-                //     "La contraseña debe de tener minimo 6 caracteres, al menos una letra mayúscula, al menos una letra minucula, al menos un dígito, 1 caracter especial";
-                // }
 
                 //validacion para ambos
                 
@@ -63,19 +63,37 @@ function FormLogin() {
                 return errores;
               }}
 
-              onSubmit={ async(values, {resetForm}) => { //funcion para enviar el forumario
-                
+              onSubmit={ async(values, actions, event) => { //funcion para enviar el forumario      
                 try {
+                if(captcha.current.getValue()){
+                  console.log("El usuario no es un robot")
+                }else{
+                  console.log("Por favor acepta el captcha")
+                }
                   const response = await axios.post("http://localhost:4000/api/signin", values, { withCredentials: true });
-                  //const allCookies = document.cookie;
-        
-                  console.log(response.data)
-                  //actions.resetForm();
+                  Swal.fire({
+                    icon: "success",
+                    title: "Bienvenido",
+                    showConfirmButton: false,
+                    timer: 1500,
+                  });
+                  await new Promise((resolve) => {
+                    window.localStorage.setItem( "loggedUser", JSON.stringify(response.data));
+                    resolve();
+                  });
+                  setIsLoged(true);
+                  setUserName(response.data.name);
+                  navigate("/dashboard");
                 } catch (error) {
                   console.log(error);
+                  // Si deseas acceder a response.data en caso de error, asegúrate de que response esté definido.
+                  if (error.response) {
+                    console.log(error.response.data);
+                  }
                 }
-
+                
               }}
+
             >
               {({ values, errors, touched,handleSubmit, handleChange, handleBlur }) => (
 
@@ -111,6 +129,11 @@ function FormLogin() {
                     onBlur={handleBlur}
                   />
                 {touched.password && errors.password && <div className="error">{errors.password}</div>}
+
+                <ReCAPTCHA 
+                  ref={captcha}
+                  sitekey="6Lc6YA8pAAAAAPIEg8YBkmffcCSzporvrtNWyXb1" onChange={onChange}
+                  />
 
                   <Button name={"Iniciar sesion"} />
 

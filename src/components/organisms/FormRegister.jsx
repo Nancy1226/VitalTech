@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import ReCAPTCHA from "react-google-recaptcha";
 import Title from "../atoms/Title";
 import Label from "../atoms/Label";
 import Img from "../atoms/Img";
@@ -12,9 +14,16 @@ import Button from "../atoms/Button";
 import "../../components/styles/Forms.css"
 import GroupLink from "../molecules/GroupLink.jsx";
 
-function FormRegister({dato, valor}) {
 
+function FormRegister() {
+  const captcha = useRef(null);
   const navigate = useNavigate();
+
+  const onChange = () =>{
+    if(captcha.current.getValue()){
+      console.log("El usuario no es un robot")
+    }
+  }
 
     return (
       <>
@@ -24,8 +33,8 @@ function FormRegister({dato, valor}) {
               initialValues={{
                 name: " ",
                 email: " ",
-                password: " ",
-                confirmPassword: " ",
+                password: "",
+                confirmPassword: "",
               }}
               validate={(valores) => {
                 //funcion para validar el forumario
@@ -34,13 +43,13 @@ function FormRegister({dato, valor}) {
                 //validacion nombre
                 if (!valores.name) {
                   errores.name = "Por favor ingresa un nombre";
-                  // } else if (
-                  //   !/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$/.test(
-                  //     valores.name
-                  //   )
-                  // ) {
-                  //   errores.name =
-                  //     "El nombre solo puede contener letras";
+                  } else if (
+                    !/^^(?:[A-ZÄËÏÖÜÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙ][a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+)$/.test(
+                      valores.name
+                    )
+                  ) {
+                    errores.name =
+                      "El nombre solo puede contener letras";
                 }
 
                 //validacion correo
@@ -72,8 +81,15 @@ function FormRegister({dato, valor}) {
 
                 return errores;
               }}
-              onSubmit={async (valores, { resetForm }) => {
+              onSubmit={async (valores, { resetForm  }, event) => {
                 //funcion para enviar el forumario
+                event.preventDefault();
+                if(captcha.current.getValue()){
+                  console.log("El usuario no es un robot")
+                }else{
+                  console.log("Por favor acepta el captcha")
+                }
+
                 const apiKey = "at_VGPXrkSKUcYgsR9YLKq3up9RGgYCp";
                 const emailAddress = valores.email;
 
@@ -90,20 +106,21 @@ function FormRegister({dato, valor}) {
                     console.log("La verificación de formato es verdadera");
 
                     const objectDataFront = {
-                      name: valores.name,
+                      
                       email: valores.email,
                       password: valores.password
                     }
                     
                     axios
                       .post("http://localhost:4000/api/signup", objectDataFront)
+
                       .then((signupResponse) => {
                         console.log(
                           "***********************Viendo el estatus de la API de registro*****************************"
                         );
                         console.log(signupResponse.status);
 
-                        setTimeout(() => {
+
                           resetForm();
 
                           if (signupResponse.status === 201) {
@@ -115,7 +132,7 @@ function FormRegister({dato, valor}) {
                             });
                             navigate("/");
                           }
-                        }, 300);
+
                       })
                       .catch((signupError) => {
                         console.error(
@@ -208,8 +225,13 @@ function FormRegister({dato, valor}) {
                     <div className="error">{errors.confirmPassword}</div>
                   )}
 
+                  <ReCAPTCHA 
+                  ref={captcha}
+                  sitekey="6Lc6YA8pAAAAAPIEg8YBkmffcCSzporvrtNWyXb1" onChange={onChange}
+                  />
 
                   <Button name={"Registrarse"} />
+
 
                   <GroupLink
                     to={"/"}

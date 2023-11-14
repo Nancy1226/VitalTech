@@ -1,9 +1,14 @@
 import React from 'react'
 import  html2pdf  from "html2pdf.js";
+import {useState} from 'react';
+import logo from "../../assets/VitalLogo.png"
+
 
 function HistorySection() {
+  const [showExportButton, setShowExportButton] = useState(true);
 
   const generatePDF = async () => {
+    setShowExportButton(false);
     const content = document.getElementById('content-to-pdf');
 
     const options = {
@@ -15,18 +20,24 @@ function HistorySection() {
     };
 
     try {
-      const pdf = await html2pdf().set(options).from(content).save()
+      const pdf = await html2pdf().set(options).from(content).save();
     } catch (error) {
       console.error('Error al generar el PDF:', error);
+    } finally {
+
+      setShowExportButton(true);
     }
     
 };
 
     return (
         <>
+        <main id="content-to-pdf">
+
+        {showExportButton && (
         <button class="Export" onClick={generatePDF}>Exportar historial</button>
-        <div id="content-to-pdf">
-        <main>
+        )}
+
           <h3>Datos del paciente</h3>
           <h3>Nombre: Prueba</h3>
           <h3>Edad: XX</h3>
@@ -56,11 +67,12 @@ function HistorySection() {
               </tbody>
 
             </table>
-            
+
+            <img src={logo} style={{ display: 'none' }} />
+          
           </div>
-         
+
         </main>
-         </div>
         </>
       );
 }
