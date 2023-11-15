@@ -1,5 +1,5 @@
-import HistorySection from "../components/organisms/HistorySection";
 import Navbar from "../components/organisms/Navbar";
+import HistorySection from "../components/organisms/HistorySection";
 import DarkSection from "../components/organisms/DarkSection";
 function History() {
     return ( 

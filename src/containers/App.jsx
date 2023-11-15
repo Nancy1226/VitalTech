@@ -7,7 +7,6 @@ import Home from '../pages/Home'
 import Register from '../pages/Register'
 import Dashboard from '../pages/Dashboard'
 import NotFound from '../pages/NotFound'
-import FormA from '../components/organisms/FormA'
 import History from '../pages/History'
 
 function App() {
@@ -18,7 +17,7 @@ function App() {
   const [userName, setUserName] = useState(
     () => {
       const loggedUser = window .localStorage.getItem("loggedUser");
-      return loggedUser ? JSON.parse(loggedUser).nameuser : "";
+      return loggedUser ? JSON.parse(loggedUser).userName : "";
     }
   );
 
@@ -29,11 +28,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Login/>}></Route>
           <Route path='/register' element={<Register/>}></Route>
-          <Route path='/login' element={<FormA/>}></Route>
+          
           
           <Route element={<RouteProtected session={isLoged}/>}>
             <Route path='/home' element={<Home/>}></Route>
             <Route path='/dashboard' element={<Dashboard />} ></Route>
+            <Route path='/history' element={<History />} ></Route>
           </Route>
 
           <Route path="/*" element={<NotFound/>} />

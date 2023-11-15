@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
+import {useContext} from "react";
+import UserContext from '../../context/UserContext';
 import '../styles/Dashboard.css'
 
 function DarkSection() {
+    const {userName, setUserName} = useContext(UserContext);
+    const {setIsLoged} = useContext(UserContext);
     const [darkModeActive, setDarkModeActive] = useState(false);
 
   const handleDarkModeToggle = () => {
@@ -27,7 +31,7 @@ function DarkSection() {
             <div class="profile">
               <div class="info">
                 <p>
-                  Hola, <b>YahirDev</b>
+                  Hola, <b>{userName}</b>
                 </p>
                 <small class="text-muted">Usuario</small>
               </div>

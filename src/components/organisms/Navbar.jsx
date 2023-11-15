@@ -1,6 +1,27 @@
-import logo from "../../assets/VitalLogo.png"
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { useContext } from "react";
+import UserContext from "../../context/UserContext";
+import logo from "../../assets/VitalLogo.png"
+
+
 function Navbar() {
+    const {userName, setUserName} = useContext(UserContext);
+    const {setIsLoged} = useContext(UserContext);
+
+    const logout = async () => {
+        window.localStorage.removeItem("loggedUser");
+        console.log(userName);
+        setIsLoged(false);
+        setUserName("");
+        console.log(userName);
+        const res = await axios.get("http://localhost:4000/api/logout", {
+          withCredentials: true,
+        });
+        console.log(res);
+        console.log("Cerrar sesion, limpiando cookie..");
+      }
+
     return ( 
     <>
     <aside>
@@ -37,12 +58,12 @@ function Navbar() {
                     <h3>Historial</h3>
                 </NavLink>
                 
-                <a href="#">
-                    <span class="material-icons-sharp">
+                <NavLink to={"/"} exact activeClassName="active">
+                    <span class="material-icons-sharp" onClick={logout}>
                         logout
                     </span>
                     <h3>Logout</h3>
-                </a>
+                </NavLink>
             </div>
         </aside>
     </> 

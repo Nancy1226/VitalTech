@@ -1,8 +1,10 @@
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useRef } from "react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import ReCAPTCHA from "react-google-recaptcha";
 import Title from "../atoms/Title";
 import Label from "../atoms/Label";
 import Img from "../atoms/Img";
@@ -12,9 +14,16 @@ import Button from "../atoms/Button";
 import "../../components/styles/Forms.css"
 import GroupLink from "../molecules/GroupLink.jsx";
 
-function FormRegister({dato, valor}) {
 
+function FormRegister() {
+  const captcha = useRef(null);
   const navigate = useNavigate();
+
+  const onChange = () =>{
+    if(captcha.current.getValue()){
+      console.log("El usuario no es un robot")
+    }
+  }
 
     return (
       <>
@@ -24,8 +33,8 @@ function FormRegister({dato, valor}) {
               initialValues={{
                 name: " ",
                 email: " ",
-                password: " ",
-                confirmPassword: " ",
+                password: "",
+                confirmPassword: "",
               }}
               validate={(valores) => {
                 //funcion para validar el forumario
@@ -34,14 +43,8 @@ function FormRegister({dato, valor}) {
                 //validacion nombre
                 if (!valores.name) {
                   errores.name = "Por favor ingresa un nombre";
-                  // } else if (
-                  //   !/^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+(?:\s+[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+){1,5}(?<!\s)$/.test(
-                  //     valores.name
-                  //   )
-                  // ) {
-                  //   errores.name =
-                  //     "El nombre solo puede contener letras";
-                }
+                  } 
+                
 
                 //validacion correo
                 if (!valores.email) {
@@ -72,9 +75,15 @@ function FormRegister({dato, valor}) {
 
                 return errores;
               }}
-              onSubmit={async (valores, { resetForm }) => {
+              onSubmit={async (valores, { resetForm  }) => {
                 //funcion para enviar el forumario
-                const apiKey = "at_VGPXrkSKUcYgsR9YLKq3up9RGgYCp";
+                if(captcha.current.getValue()){
+                  console.log("El usuario no es un robot")
+                }else{
+                  console.log("Por favor acepta el captcha")
+                }
+
+                const apiKey = "at_zflcKeL04C6TIHqOakfltmZ62ApzQ";
                 const emailAddress = valores.email;
 
                 const apiUrl = `https://emailverification.whoisxmlapi.com/api/v3?apiKey=${apiKey}&emailAddress=${emailAddress}`;
@@ -97,13 +106,14 @@ function FormRegister({dato, valor}) {
                     
                     axios
                       .post("http://localhost:4000/api/signup", objectDataFront)
+
                       .then((signupResponse) => {
                         console.log(
                           "***********************Viendo el estatus de la API de registro*****************************"
                         );
                         console.log(signupResponse.status);
 
-                        setTimeout(() => {
+
                           resetForm();
 
                           if (signupResponse.status === 201) {
@@ -115,17 +125,27 @@ function FormRegister({dato, valor}) {
                             });
                             navigate("/");
                           }
-                        }, 300);
+
                       })
-                      .catch((signupError) => {
-                        console.error(
-                          "Error en la solicitud de registro:",
-                          signupError
+                      .catch((signupError, signupResponse) => {
+                        console.log(
+                          "***********************Viendo el estatus de la API de registro*****************************"
                         );
+                        console.log(signupResponse.status);
+                        
+                        if (signupResponse.status === 400) {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "El correo electronico ya está registrado!",
+                          });
+                        }
+
                         Swal.fire({
                           icon: "error",
                           title: "Oops...",
-                          text: "El correo electronico ya está registrado!",
+                          text: "Intente de nuevo!",
+                          footer: 'Si el problema persiste intentelo mas tarde'
                         });
                       });
                   } else if (responseData.smtpCheck === "false") {
@@ -208,8 +228,13 @@ function FormRegister({dato, valor}) {
                     <div className="error">{errors.confirmPassword}</div>
                   )}
 
+                  <ReCAPTCHA 
+                  ref={captcha}
+                  sitekey="6Lc6YA8pAAAAAPIEg8YBkmffcCSzporvrtNWyXb1" onChange={onChange}
+                  />
 
                   <Button name={"Registrarse"} />
+
 
                   <GroupLink
                     to={"/"}
