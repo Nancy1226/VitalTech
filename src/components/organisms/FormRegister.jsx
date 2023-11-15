@@ -43,14 +43,8 @@ function FormRegister() {
                 //validacion nombre
                 if (!valores.name) {
                   errores.name = "Por favor ingresa un nombre";
-                  } else if (
-                    !/^^(?:[A-ZÄËÏÖÜÁÉÍÓÚÂÊÎÔÛÀÈÌÒÙ][a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+(?:\s+[a-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+)+)$/.test(
-                      valores.name
-                    )
-                  ) {
-                    errores.name =
-                      "El nombre solo puede contener letras";
-                }
+                  } 
+                
 
                 //validacion correo
                 if (!valores.email) {
@@ -81,16 +75,15 @@ function FormRegister() {
 
                 return errores;
               }}
-              onSubmit={async (valores, { resetForm  }, event) => {
+              onSubmit={async (valores, { resetForm  }) => {
                 //funcion para enviar el forumario
-                event.preventDefault();
                 if(captcha.current.getValue()){
                   console.log("El usuario no es un robot")
                 }else{
                   console.log("Por favor acepta el captcha")
                 }
 
-                const apiKey = "at_VGPXrkSKUcYgsR9YLKq3up9RGgYCp";
+                const apiKey = "at_zflcKeL04C6TIHqOakfltmZ62ApzQ";
                 const emailAddress = valores.email;
 
                 const apiUrl = `https://emailverification.whoisxmlapi.com/api/v3?apiKey=${apiKey}&emailAddress=${emailAddress}`;
@@ -106,7 +99,7 @@ function FormRegister() {
                     console.log("La verificación de formato es verdadera");
 
                     const objectDataFront = {
-                      
+                      name: valores.name,
                       email: valores.email,
                       password: valores.password
                     }
@@ -134,15 +127,25 @@ function FormRegister() {
                           }
 
                       })
-                      .catch((signupError) => {
-                        console.error(
-                          "Error en la solicitud de registro:",
-                          signupError
+                      .catch((signupError, signupResponse) => {
+                        console.log(
+                          "***********************Viendo el estatus de la API de registro*****************************"
                         );
+                        console.log(signupResponse.status);
+                        
+                        if (signupResponse.status === 400) {
+                          Swal.fire({
+                            icon: "error",
+                            title: "Error",
+                            text: "El correo electronico ya está registrado!",
+                          });
+                        }
+
                         Swal.fire({
                           icon: "error",
                           title: "Oops...",
-                          text: "El correo electronico ya está registrado!",
+                          text: "Intente de nuevo!",
+                          footer: 'Si el problema persiste intentelo mas tarde'
                         });
                       });
                   } else if (responseData.smtpCheck === "false") {

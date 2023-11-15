@@ -63,7 +63,7 @@ function FormLogin() {
                 return errores;
               }}
 
-              onSubmit={ async(values, actions, event) => { //funcion para enviar el forumario      
+              onSubmit={ async(values, actions) => { //funcion para enviar el forumario      
                 try {
                 if(captcha.current.getValue()){
                   console.log("El usuario no es un robot")
@@ -82,11 +82,17 @@ function FormLogin() {
                     resolve();
                   });
                   setIsLoged(true);
-                  setUserName(response.data.name);
+                  setUserName(response.data.userName);
+                  console.log("imprimiendo el response de la api " + (response.data.userName))
                   navigate("/dashboard");
                 } catch (error) {
+                  Swal.fire({
+                    icon: "error",
+                    title: "Error...",
+                    text: "Intente de nuevo",
+                    footer: 'Si el problema persiste intentelo mas tarde'
+                  });
                   console.log(error);
-                  // Si deseas acceder a response.data en caso de error, asegúrate de que response esté definido.
                   if (error.response) {
                     console.log(error.response.data);
                   }

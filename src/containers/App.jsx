@@ -17,7 +17,7 @@ function App() {
   const [userName, setUserName] = useState(
     () => {
       const loggedUser = window .localStorage.getItem("loggedUser");
-      return loggedUser ? JSON.parse(loggedUser).nameuser : "";
+      return loggedUser ? JSON.parse(loggedUser).userName : "";
     }
   );
 
