@@ -36,7 +36,7 @@ function DarkSection() {
                 <small class="text-muted">Usuario</small>
               </div>
               <div class="profile-photo">
-                {/* <img src="images/profile-1.jpg"> */}
+                <img src="images/profile-1.jpg" />
               </div>
             </div>
           </div>
