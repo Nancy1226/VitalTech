@@ -1,13 +1,16 @@
 import React from 'react'
-import  html2pdf  from "html2pdf.js";
-import  {useState, useEffect } from 'react';
+import html2pdf  from "html2pdf.js";
+import {useState, useEffect, useContext} from 'react';
 import logo from "../../assets/VitalLogo.png"
 import axios from 'axios';
+import UserContext from '../../context/UserContext';
 
   
 function HistorySection() {
   const [datos, setDatos] = useState([]);
   const [showExportButton, setShowExportButton] = useState(true);
+  const {userName, setUserName} = useContext(UserContext);
+  const [activoIMG, setactivoIMG] = useState(false)
 
   useEffect(() => {
     const fetchDataGrapichs = async () => {
@@ -30,6 +33,13 @@ function HistorySection() {
   }, []);
 
   const generatePDF = async () => {
+   
+    setTimeout(() => {
+      setactivoIMG(false);
+    }, 2000); // Puedes ajustar el tiempo según tus necesidades
+
+
+    setactivoIMG(!activoIMG);
     setShowExportButton(false);
     const content = document.getElementById('content-to-pdf');
 
@@ -59,11 +69,23 @@ function HistorySection() {
         {showExportButton && (
         <button class="Export" onClick={generatePDF}>Exportar historial</button>
         )}
-
-          <h3>Datos del paciente</h3>
-          <h3>Nombre: Prueba</h3>
-          <h3>Edad: XX</h3>
        
+        <div className='datos-paciente'>
+          <div>
+            <h3>Datos del paciente</h3>
+            <h3>Nombre: {userName}</h3>
+          </div>
+          <img src={logo} style={
+            {
+              width:'150px',
+              display: activoIMG ? 'flex' : 'none', 
+            }
+
+          }/>
+
+        </div>
+
+          
         <div class="recent-orders">
             <h2>Historial de mediciones</h2>
             <table>
