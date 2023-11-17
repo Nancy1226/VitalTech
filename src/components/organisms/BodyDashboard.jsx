@@ -1,6 +1,9 @@
 import GroupCards from "../molecules/GroupCards";
 import GraphicGroup from "../molecules/GraphicGroup";
+
+
 function BodyDashboard() {
+
     return (
       <>
         <main>

@@ -4,7 +4,6 @@ import { useContext } from "react";
 import UserContext from "../../context/UserContext";
 import logo from "../../assets/VitalLogo.png"
 
-
 function Navbar() {
     const {userName, setUserName} = useContext(UserContext);
     const {setIsLoged} = useContext(UserContext);
