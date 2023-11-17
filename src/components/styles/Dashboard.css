@@ -682,3 +682,9 @@ main .recent-orders a{
     cursor: pointer;
     
 }
+
+.datos-paciente{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
