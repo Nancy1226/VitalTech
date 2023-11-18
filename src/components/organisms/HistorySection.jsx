@@ -1,16 +1,38 @@
 import React from 'react'
 import  html2pdf  from "html2pdf.js";
-import {useState, useContext} from 'react';
+import {useEffect,useState, useContext} from 'react';
 import logo from "../../assets/VitalLogo.png"
 import UserContext from '../../context/UserContext';
+import { getAllVital } from '../../api/routes';
+import { format } from 'date-fns';
+import styled from 'styled-components';
 
 
 function HistorySection() {
   const {userName, setUserName} = useContext(UserContext);
+  const [signos, setsignos] = useState([])
 
   const [showExportButton, setShowExportButton] = useState(true);
 
   const [activoIMG, setactivoIMG] = useState(false)
+
+  useEffect(() => {
+
+    async function obtener (){
+      try{
+        const response = await getAllVital()
+        console.log("Estamos imprimiendo los datos que vienen")
+        console.log(response.data)
+        setsignos(response.data)
+      }catch(error){
+        console.log(error)
+      }
+    }
+
+    obtener()
+    
+  }, [])
+
 
   const generatePDF = async () => {
    
@@ -46,15 +68,17 @@ function HistorySection() {
         <>
         <main id="content-to-pdf">
 
-        {showExportButton && (
-        <button class="Export" onClick={generatePDF}>Exportar historial</button>
-        )}
-
+        
         <div className='datos-paciente'>
           <div>
-            <h3>Datos del paciente</h3>
+            <h2>Datos del paciente</h2>
             <h3>Nombre: {userName}</h3>
           </div>
+          {showExportButton && (
+          <StyledButton onClick={generatePDF}>Exportar como PDF</StyledButton>
+       // <button class="Export" onClick={generatePDF}>Exportar historial</button>
+        )}
+
           <img src={logo} style={
             {
               width:'150px',
@@ -82,13 +106,23 @@ function HistorySection() {
 
               {/* tabla para el historial */}
               <tbody>
-                <tr>
-                  <td>98</td>
-                  <td>98%</td>
-                  <td>30 °C</td>
-                  <td>124</td>
-                  <td>02/03/2023</td>
-                </tr>
+                  {signos.map((item) =>(
+                      <tr>
+                      <td>{item.heart_rate}</td>
+                      <td>{item.systolic_pressure}</td>
+                      <td>{item.diastolic_pressure}</td>
+                      <td>{item.blood_oxygen}</td>
+                      <td>
+                      {" "}
+                    {format(
+                      new Date(
+                        item.create_at.split("T")[0].split("-")
+                      ),
+                      "dd - MM - yyyy"
+                    )}  </td>
+                      </tr>
+                  ))}
+               
               </tbody>
 
             </table>
@@ -103,3 +137,33 @@ function HistorySection() {
 }
 
 export default HistorySection;
+
+const StyledButton = styled.button`
+    width: 9em;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 5px 5px 10px #c5c5c5,
+             -5px -5px 10px #ffffff;
+    &:before{
+        content: '';
+        width: 0;
+        height: 3em;
+        border-radius: 30em;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-image: linear-gradient(90deg, hsla(210, 90%, 80%, 1) 0%, hsla(212, 93%, 49%, 1) 100%); transition: .5s ease;
+        display: block;
+        z-index: -1;
+    }
+    &:hover:before{
+        width: 9em;
+        color: blue;
+    }
+`;
