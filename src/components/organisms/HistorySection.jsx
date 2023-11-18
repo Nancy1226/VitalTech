@@ -6,6 +6,7 @@ import UserContext from '../../context/UserContext';
 import { getAllVital } from '../../api/routes';
 import { format } from 'date-fns';
 import styled from 'styled-components';
+import pdfPNG from '../../assets/pdf.png'
 
 
 function HistorySection() {
@@ -75,7 +76,13 @@ function HistorySection() {
             <h3>Nombre: {userName}</h3>
           </div>
           {showExportButton && (
-          <StyledButton onClick={generatePDF}>Exportar como PDF</StyledButton>
+          <StyledButton onClick={generatePDF}><img src={pdfPNG} style={
+            {
+              width:'35px',
+              alignItems:'center'
+            }
+
+          } /></StyledButton>
        // <button class="Export" onClick={generatePDF}>Exportar historial</button>
         )}
 
@@ -89,7 +96,6 @@ function HistorySection() {
 
         </div>
 
-          
         <div class="recent-orders">
             <h2>Historial de mediciones</h2>
             <table>
@@ -145,8 +151,12 @@ const StyledButton = styled.button`
     font-size: 15px;
     font-family: inherit;
     border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
     z-index: 1;
     box-shadow: 5px 5px 10px #c5c5c5,
              -5px -5px 10px #ffffff;
@@ -158,12 +168,12 @@ const StyledButton = styled.button`
         position: absolute;
         top: 0;
         left: 0;
-        background-image: linear-gradient(90deg, hsla(210, 90%, 80%, 1) 0%, hsla(212, 93%, 49%, 1) 100%); transition: .5s ease;
+        background-image: linear-gradient(90deg, hsla(0, 90%, 80%, 1) 0%, hsla(0, 93%, 49%, 1) 100%); transition: .5s ease;
         display: block;
         z-index: -1;
     }
     &:hover:before{
         width: 9em;
-        color: blue;
+        color: Red;
     }
 `;

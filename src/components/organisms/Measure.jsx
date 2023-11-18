@@ -1,15 +1,15 @@
-import {LineChart, XAxis, YAxis, Line, CartesianGrid, Tooltip} from "recharts"
 import { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { insertVital } from "../../api/routes";
 import styled from "styled-components";
+import Modal from "../molecules/Modal";
 
 function Measure() {
     const arrayPPM = [];
     const arrayOxi = [];
     const arrayTemp = [];
 
-
+    const [showModal, setShowModal] = useState(false);
     const [promedioOxi, setPromedioOxi] = useState(0);  
     const [promedioTemp, setpromedioTemp] = useState(0)
     const [promedioPPM, setpromedioPPM] = useState(0)
@@ -35,10 +35,12 @@ function Measure() {
             if (socket.connected) {
                 alert("Mensaje enviado a la raspberry");
                 socket.emit('conexion', "Iniciar");
+                setShowModal(true);
 
                 setTimeout(() => {
                     socket.emit('conexion', "Detener");
                     alert(`Estamos deteniendo la ejecucion del archivo`)
+                    setShowModal(false);
                     let oxigeno = 0
                     let temp = 0
                     let frecu = 0
@@ -118,7 +120,6 @@ function Measure() {
 
                   }, 45000);
             } else {
-                alert("No esta conectado el dispositivo")
                 console.error('El socket no está conectado.');
             }
         } catch (error) {
@@ -143,10 +144,11 @@ function Measure() {
             
             <div class="new-users">
             <h2>Medición</h2>
-                <div class="user-list">
+                <div class="button-site">
                    <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
                 </div>
                 <div class="user-list">
+                    {showModal && <Modal />}
                     <div>
                         <h2>Temperatura corporal: {promedioTemp} °C</h2>
                         <h2>Frecuencia cardiaca:  {promedioPPM} PPM </h2>
@@ -175,6 +177,7 @@ const StyledButton = styled.button`
     position: relative;
     overflow: hidden;
     z-index: 1;
+    cursor: pointer;
     box-shadow: 6px 6px 12px #c5c5c5,
              -6px -6px 12px #ffffff;
     &:before{

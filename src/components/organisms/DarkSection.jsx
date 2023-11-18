@@ -23,8 +23,8 @@ function DarkSection() {
             </button>
             <div class="dark-mode">
               <div className={`dark-mode ${darkModeActive ? 'active' : ''}`} onClick={handleDarkModeToggle}>
-              <span class="material-icons-sharp active">light_mode</span>
-                <span class="material-icons-sharp">dark_mode</span>
+              <span class={`material-icons-sharp ${darkModeActive ? '' : 'active'}`}>light_mode</span>
+                <span class={`material-icons-sharp ${darkModeActive ? 'active' : ''}`}>dark_mode</span>
               </div>
             </div>
 
