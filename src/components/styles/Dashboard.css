@@ -283,6 +283,16 @@ main .new-users .user-list{
     transition: all 0.3s ease;
 }
 
+main .new-users .user-list .styledContainer{
+    border: 2px solid red;
+    display: flex;
+}
+
+main .new-users .user-list .styledContainer .styledSubContainer{
+    border: 2px solid rebeccapurple;
+    width: 50%;
+}
+
 main .new-users .user-list:hover{
     box-shadow: none;
 }

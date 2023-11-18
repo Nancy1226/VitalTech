@@ -83,15 +83,27 @@ function Measure() {
             <div class="new-users">
             <h2>Medición</h2>
                 <div class="user-list">
-                    <button onClick={iniciar}>Iniciar Medición</button><br />
+                    <styledButton onClick={iniciar}>Iniciar Medición</styledButton><br />
                 </div>
                 <div class="user-list">
-                    <div>
-                        <h2>Temperatura corporal: {promedioTemp} °C</h2>
-                        <h2>Frecuencia cardiaca:  {promedioPPM} PPM </h2>
-                        <h2>Oxigeno en sangre: {promedioOxi} % </h2>
-                        <h2>Presion Sistolica: </h2>
-                        <h2>Presion Diastolica: </h2>
+                    <div className="styledContainer">
+                        <div className="styledSubContainer">
+                            <h2>Temperatura corporal: {promedioTemp} °C</h2>
+                        </div>
+                        <div className="styledSubContainer">
+                            <h2>Frecuencia cardiaca:  {promedioPPM} PPM </h2>
+                        </div>
+                        <div className="styledSubContainer">
+                            <h2>Oxigeno en sangre: {promedioOxi} % </h2>
+                        </div>
+                        </div>
+                        <div className="styledContainer">
+                        <div className="styledSubContainer">
+                            <h2>Presion Sistolica: </h2>
+                        </div>
+                        <div className="styledSubContainer">
+                            <h2>Presion Diastolica: </h2>
+                        </div>
                     </div>
                     
                 </div>

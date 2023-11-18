@@ -3,23 +3,14 @@ import styled from "styled-components";
 function Button({name}) {
     return ( 
     <>
-    {/* <StyledContainer> */}
         <StyledButton type={"submit"}>
             {name}
         </StyledButton>
-    {/* </StyledContainer> */}
     </>
      );
 }
 
 export default Button;
-
-// const StyledContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 85%;
-// `;
 
 const StyledButton = styled.button`
     width: 446px;

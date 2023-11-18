@@ -1,10 +1,10 @@
+import { format } from 'date-fns';
 import React from 'react'
 import html2pdf  from "html2pdf.js";
 import {useState, useEffect, useContext} from 'react';
 import logo from "../../assets/VitalLogo.png"
 import axios from 'axios';
 import UserContext from '../../context/UserContext';
-
   
 function HistorySection() {
   const [datos, setDatos] = useState([]);
@@ -27,7 +27,7 @@ function HistorySection() {
     fetchDataGrapichs();
 
     return () => {
-      // Realiza la limpieza necesaria
+
     };
 
   }, []);
@@ -95,7 +95,7 @@ function HistorySection() {
                   <th>Presion sistolica</th>
                   <th>Presion diastolica</th>
                   <th>Oxígeno en sangre</th>
-                  <th>Fecha de medición</th>
+                  <th>Fecha y hora de medición</th>
                   <th></th>
                 </tr>
               </thead>
@@ -109,7 +109,7 @@ function HistorySection() {
                     <td>{item.systolic_pressure}</td>
                     <td>{item.diastolic_pressure}</td>
                     <td>{item.blood_oxygen}</td>
-                    <td>{item.created_at}</td>
+                    <td>{format(new Date(item.created_at), 'dd/MM/yyyy HH:mm:ss')}</td>
                   </React.Fragment>
                 ))}
               </tr>
