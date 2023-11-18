@@ -12,6 +12,7 @@ function Button({name}) {
 
 export default Button;
 
+
 const StyledButton = styled.button`
     width: 446px;
     height: 58px;
