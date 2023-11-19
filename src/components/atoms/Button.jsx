@@ -14,12 +14,6 @@ function Button({name}) {
 
 export default Button;
 
-// const StyledContainer = styled.div`
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   width: 85%;
-// `;
 
 const StyledButton = styled.button`
     width: 446px;
