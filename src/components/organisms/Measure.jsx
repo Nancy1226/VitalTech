@@ -10,13 +10,44 @@ function Measure() {
     const arrayTemp = [];
 
     const [showModal, setShowModal] = useState(false);
+    const [connected, setConnected] = useState(false);
     const [promedioOxi, setPromedioOxi] = useState(0);  
     const [promedioTemp, setpromedioTemp] = useState(0)
     const [promedioPPM, setpromedioPPM] = useState(0)
     const [sistolica, setsistolica] = useState(0)
     const [diastolica, setdiastolica] = useState(0)
 
-    const socket = io("http://50.19.138.200:3000");
+   
+    const socket = io("wss://websocket-server.testsoftware.dev:3000");
+
+    useEffect(() => {
+        // Manejar eventos de conexión
+        socket.on("connect", () => {
+          console.log("Conectado al servidor WebSocket");
+          setConnected(true);
+        });
+    
+        // Manejar eventos de desconexión
+        socket.on("disconnect", () => {
+          console.log("Desconectado del servidor WebSocket");
+          setConnected(false);
+        });
+    
+        // Manejar eventos de errores
+        socket.on("error", (error) => {
+          console.error("Error en la conexión WebSocket:", error);
+        });
+    
+        // Devuelve una función de limpieza para desconectar el socket cuando el componente se desmonta
+        return () => {
+          if (socket.connected) {
+            socket.disconnect();
+            setConnected(false);
+          }
+        };
+      }, []);
+    
+    
     
     socket.on("sensor_data_front_ppm", (newData) => {
           arrayPPM.push(newData);
@@ -32,6 +63,12 @@ function Measure() {
  
     const iniciar = async() => {
         try {
+
+            if (!connected) {
+                // Solo intenta conectar si no está conectado
+                socket.connect();
+              }
+              
             if (socket.connected) {
                 alert("Mensaje enviado a la raspberry");
                 socket.emit('conexion', "Iniciar");
