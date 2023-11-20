@@ -4,6 +4,7 @@ import UserContext from '../../context/UserContext';
 import '../styles/Dashboard.css'
 import { images } from '../../images/images';
 
+
 function DarkSection() {
     const {userName, setUserName} = useContext(UserContext);
     const {setIsLoged} = useContext(UserContext);
@@ -27,15 +28,29 @@ function DarkSection() {
     return (
       <>
         <div class="right-section">
-
           <div class="nav">
             <button id="menu-btn" onClick={openMenu}>
               <span class="material-icons-sharp">menu</span>
             </button>
             <div class="dark-mode">
-              <div className={`dark-mode ${darkModeActive ? 'active' : ''}`} onClick={handleDarkModeToggle}>
-              <span class="material-icons-sharp active">light_mode</span>
-                <span class="material-icons-sharp">dark_mode</span>
+              <div
+                className={`dark-mode ${darkModeActive ? "active" : ""}`}
+                onClick={handleDarkModeToggle}
+              >
+                <span
+                  class={`material-icons-sharp ${
+                    darkModeActive ? "" : "active"
+                  }`}
+                >
+                  light_mode
+                </span>
+                <span
+                  class={`material-icons-sharp ${
+                    darkModeActive ? "active" : ""
+                  }`}
+                >
+                  dark_mode
+                </span>
               </div>
             </div>
 
@@ -52,6 +67,13 @@ function DarkSection() {
             </div>
           </div>
           {/* <!-- End of Nav --> */}
+          <div class="user-profile">
+            <div class="logo">
+              <img src={images.logo} />
+              <h2>VitalTech</h2>
+              <p>Signos vitales</p>
+            </div>
+          </div>
         </div>
       </>
     );

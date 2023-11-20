@@ -14,6 +14,13 @@ export default Button;
 
 
 const StyledButton = styled.button`
+    width: 90vw;
+    height: 8%;
+    color: white;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    background: #075BBB;
+@media (min-width: 1024px) {
     width: 446px;
     height: 58px;
     color: white;
@@ -33,5 +40,5 @@ const StyledButton = styled.button`
         cursor: pointer;
         transition: background-color 0.7s;
     }
-
+}
 `;

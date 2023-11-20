@@ -3,4 +3,5 @@ export const images = {
     heart:"/imgs/heart.svg",
     register:"/imgs/register.svg",
     icon:"imgs/icon.png",
+    logo:"imgs/Logo.png",
 };

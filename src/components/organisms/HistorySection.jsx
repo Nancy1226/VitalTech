@@ -1,9 +1,7 @@
-import { format } from 'date-fns';
 import React from 'react'
 import  html2pdf  from "html2pdf.js";
 import {useEffect,useState, useContext} from 'react';
 import logo from "../../assets/VitalLogo.png"
-import axios from 'axios';
 import UserContext from '../../context/UserContext';
 import { getAllVital } from '../../api/routes';
 import { format } from 'date-fns';
@@ -13,9 +11,7 @@ import styled from 'styled-components';
 function HistorySection() {
   const {userName, setUserName} = useContext(UserContext);
   const [signos, setsignos] = useState([])
-
   const [showExportButton, setShowExportButton] = useState(true);
-  const {userName, setUserName} = useContext(UserContext);
   const [activoIMG, setactivoIMG] = useState(false)
 
   useEffect(() => {
@@ -101,7 +97,7 @@ function HistorySection() {
                   <th>Presion sistolica</th>
                   <th>Presion diastolica</th>
                   <th>Oxígeno en sangre</th>
-                  <th>Fecha y hora de medición</th>
+                  <th>Fecha</th>
                   <th></th>
                 </tr>
               </thead>
@@ -118,7 +114,7 @@ function HistorySection() {
                       {" "}
                     {format(
                       new Date(
-                        item.create_at.split("T")[0].split("-")
+                        item.created_at.split("T")[0].split("-")
                       ),
                       "dd - MM - yyyy"
                     )}  </td>

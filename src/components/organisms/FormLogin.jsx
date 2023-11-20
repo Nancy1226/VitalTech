@@ -177,6 +177,17 @@ const StyledContainer = styled.div`
 `;
 
 const StyledContainerForm = styled.div`
+    width: 100%;
+  height: 100vh;
+  form {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (min-width: 1024px) { 
   width: 50%;
   height: 100vh;
     form {
@@ -188,6 +199,7 @@ const StyledContainerForm = styled.div`
       align-items: center;
       gap: 20px;
     }
+  }
 `;
 
 
@@ -202,12 +214,11 @@ const StyledContainerIcon = styled.div`
     }
 `;
 
-
-
-
 const StyledContainerImg = styled.div`
-    /* border: 2px solid rebeccapurple;} */
+    display: none;
+    @media (min-width: 1024px) {
     display: flex;
     width: 50%;
-    height: 100%;    
+    height: 100%;  
+    }  
 `;

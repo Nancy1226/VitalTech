@@ -138,41 +138,59 @@ function Measure() {
 
     }
 
-    return ( 
-        <main>
-            
-            <div class="new-users">
-            <h2>Medición</h2>
-                <div class="user-list">
-                   <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
+    return (
+      <main>
+        <div class="new-users">
+          <h2>Medición</h2>
+          <div class="container-list">
+            <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
+          </div>
+          <div class="user-list">
+            <div className="styledContainer">
+              
+              <div class="grid">
+                <div className="card">
+                  <h2>Temperatura corporal: </h2>
+                  <span class="material-icons-sharp">device_thermostat</span>
+                  <p>{promedioTemp} °C</p>
                 </div>
-                <div class="user-list">
-                    <div className="styledContainer">
-                        <div className="styledSubContainer">
-                            <h2>Temperatura corporal: {promedioTemp} °C</h2>
-                        </div>
-                        <div className="styledSubContainer">
-                            <h2>Frecuencia cardiaca:  {promedioPPM} PPM </h2>
-                        </div>
-                        <div className="styledSubContainer">
-                            <h2>Oxigeno en sangre: {promedioOxi} % </h2>
-                        </div>
-                        </div>
-                        <div className="styledContainer">
-                        <div className="styledSubContainer">
-                            <h2>Presion Sistolica: </h2>
-                        </div>
-                        <div className="styledSubContainer">
-                            <h2>Presion Diastolica: </h2>
-                        </div>
-                    </div>
-                    
+                <div className="card">
+                  <h2>Frecuencia cardiaca: </h2>
+                  <span class="material-symbols-outlined">
+                    cardiology
+                    </span>
+                  <p>{promedioPPM} PPM </p>
                 </div>
+                <div className="card">
+                  <h2>Oxigeno en sangre: </h2>
+                  <span class="material-symbols-outlined">
+                    spo2
+                    </span>
+                  <p>{promedioOxi} % </p>
+                </div>
+              </div>
 
+              <div class="grid2">
+                <div className="card">
+                  <h2>Presión Sistólica: </h2>
+                  <span class="material-symbols-outlined">
+                    blood_pressure
+                    </span>
+                  <p>{sistolica} mmHg</p>
+                </div>
+                <div className="card">
+                  <h2>Presión Diastólica: </h2>
+                  <span class="material-symbols-outlined">
+                    health_metrics
+                    </span>
+                  <p>{diastolica} mmHg</p>
+                </div>
+              </div>
             </div>
-
-        </main>
-     );
+          </div>
+        </div>
+      </main>
+    );
 }
 
 export default Measure;

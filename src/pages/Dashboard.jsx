@@ -1,4 +1,4 @@
-import "../components/styles/Dashboard.css";
+// import "../components/styles/Dashboard.css";
 
 import Navbar from "../components/organisms/Navbar";
 import BodyDashboard from "../components/organisms/BodyDashboard";
