@@ -1,26 +1,37 @@
 import { getAllVital } from "../../api/routes";
 import GroupCards from "../molecules/GroupCards";
 import GraphicGroup from "../molecules/GraphicGroup";
-import { useEffect, useState } from "react";
+import { getOneMesaure, getDataGraph, getProbability } from "../../api/routes";
+import { useEffect,useState } from "react";
 
 function BodyDashboard() {
-  const [datosFiltrados, setDatosFiltrados] = useState([]);
+  const [Datos, setDatos] = useState([])
+  const [LastData, setLastData] = useState([])
+  const [probability, setprobability] = useState()
 
-  useEffect (() => {
-  const getVital = async() =>{
-    try {
-      // const fechaActual = new Date();
-      // const fechaMedicion = new Date(dato.created_at);
-      const response = await getAllVital(); 
-      console.log(response.data)
+  useEffect(() => {
 
-    } catch (error) {
-      console.error('Error al obtener los datos vitales:', error);
+    async function obtener (){
+      try{
+        const response = await getOneMesaure()
+        setLastData(response.data)
+        const graphData = await getDataGraph();
+        const porcentaje = await getProbability()
+        setprobability(porcentaje.data)
+        console.log("Estamos imprimiendo los ultimos 7 Dias")
+        console.log(graphData.data.totalPromedios)
+        setDatos(graphData.data.totalPromedios)
+        console.log("Estamos imprimiendo la ultima medicion")
+        console.log(response.data)
+      }catch(error){
+        console.log(error)
+      }
     }
 
-  } 
-    getVital();
-  }, []);
+    obtener()
+    
+  }, [])
+
 
     return (
       <>
@@ -29,21 +40,21 @@ function BodyDashboard() {
             <div class="sales">
               <GroupCards
                 title={"Temperatura Corporal"}
-                info={"$65,024"}
+                info={LastData.temperature}
                 porcentaje={"81%"}
               />
             </div>
             <div class="visits">
               <GroupCards
                 title={"Pulsaciones por minuto"}
-                info={"14,147"}
+                info={LastData.heart_rate}
                 porcentaje={"21%"}
               />
             </div>
             <div class="searches">
               <GroupCards
                 title={"Oxígeno en sangre"}
-                info={"24,981"}
+                info={LastData.blood_oxygen}
                 porcentaje={"48%"}
               />
             </div>
@@ -55,15 +66,16 @@ function BodyDashboard() {
               />
             </div>
           </div>
-        
+          <h2>La probabilidad de que usted tenga Fiebre es de : {probability} %</h2>
+          <h4> ** Los datos son calculados a partir de su ultima medición ** </h4>
           <div class="new-users">
             <h2>Gráficas</h2>
             <div class="users-list">
              {/* <Graphic/> */}
-             <GraphicGroup graphicName={"Presión arterial"} color1={"#367a9d"} color2={"#5183b5"} columnas={2} variable={"mm Hg"} datakey1={"sistolica"} datakey2={"distolica"}/>
-             <GraphicGroup graphicName={"Temperatura corporal"} color1={"#1865d7"} columnas={1} datakey1={"temp"} variable={"°C"}/>
-             <GraphicGroup graphicName={"Oxígeno en sangre"} color1={"#34ad70"} columnas={1} datakey1={"oxigeno"} variable={"%"}/>
-             <GraphicGroup graphicName={"Frecuencia cardiaca"} color1={"#5819cc"} columnas={1} datakey1={"ppm"} variable={"PPM"}/>
+             <GraphicGroup graphicName={"Presión arterial"} color1={"#367a9d"} color2={"#5183b5"} columnas={2} variable={"mm Hg"} datakey1={"promedioSystolicPressure"} datakey2={"promedioDiastolicPressure"} data={Datos} alias1={"Sistólica"} alias2={"Diastólica"}/>
+             <GraphicGroup graphicName={"Temperatura corporal"} color1={"#1865d7"} columnas={1} datakey1={"promedioTemperature"} variable={"°C"} data={Datos} alias1={"Temperatura"}/>
+             <GraphicGroup graphicName={"Oxígeno en sangre"} color1={"#34ad70"} columnas={1} datakey1={"promedioBloodOxygen"} variable={"%"} data={Datos} alias1={"Oxígeno"}/>
+             <GraphicGroup graphicName={"Frecuencia cardiaca"} color1={"#5819cc"} columnas={1} datakey1={"promedioHeartRate"} variable={"PPM"} data={Datos} alias1={"Frecuencia Cardiaca"}/>
             </div>
           </div>
 

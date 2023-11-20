@@ -112,7 +112,7 @@ function FormLogin() {
               }}
 
             >
-              {({ values, errors, touched,handleSubmit, handleChange, handleBlur }) => (
+              {({ values, errors, touched,handleSubmit, handleChange, handleBlur, isSubmitting }) => (
 
                   <Form onSubmit={handleSubmit}>
                   <Title msn={"Inicio de sesion"} />
@@ -152,7 +152,9 @@ function FormLogin() {
                   sitekey="6Lc6YA8pAAAAAPIEg8YBkmffcCSzporvrtNWyXb1" onChange={onChange}
                   />
 
-                  <Button name={"Iniciar sesion"} />
+                  <StyledButton type='submit' disabled={isSubmitting}>
+                            {isSubmitting ? "Iniciando.." : "Iniciar Sesión"}
+                  </StyledButton>
 
                   <GroupLink to={'/register'} txt={"¿No tienes una cuenta?"} msn={"Regístrate"} /> 
                 </Form>
@@ -230,6 +232,29 @@ const StyledContainerImg = styled.div`
     @media (min-width: 1024px) {
     display: flex;
     width: 50%;
-    height: 100%;  
-    }  
+    height: 100%;    
+  }
+`;
+
+const StyledButton = styled.button`
+    width: 446px;
+    height: 58px;
+    color: white;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    background: #075BBB;
+    text-align: center;
+    font-family: 'Inter';
+    font-size: 1.6em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    margin-top: 2%;
+    /* padding: 1vh 3%; */
+    &:hover {
+        cursor: pointer;
+        transition: background-color 0.7s;
+    }
+
 `;

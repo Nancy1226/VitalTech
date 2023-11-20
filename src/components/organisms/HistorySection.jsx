@@ -112,10 +112,10 @@ function HistorySection() {
               <tbody>
                   {signos.map((item) =>(
                       <tr>
-                      <td>{item.heart_rate}</td>
-                      <td>{item.systolic_pressure}</td>
-                      <td>{item.diastolic_pressure}</td>
-                      <td>{item.blood_oxygen}</td>
+                      <td>{item.heart_rate} PPM</td>
+                      <td>{item.blood_oxygen} %</td>
+                      <td>{item.temperature} °C</td>
+                      <td>{item.systolic_pressure} / {item.diastolic_pressure} </td>
                       <td>
                       {" "}
                     {format(
@@ -124,6 +124,7 @@ function HistorySection() {
                       ),
                       "dd - MM - yyyy"
                     )}  </td>
+                    
                       </tr>
                   ))}
                
