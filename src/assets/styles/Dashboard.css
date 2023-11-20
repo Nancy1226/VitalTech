@@ -75,18 +75,22 @@ b{
 }
 
 .container{
-    /* border: 2px solid black; */
-    display: grid;
+    border: 2px solid black;
+    /* display: grid; */
+    display: flex;
+    flex-direction: column;
     width: 96%;
     margin: 0 auto;
-    gap: 1.8rem;
-    grid-template-columns: 12rem auto 23rem;
+    /* gap: 1.8rem; */
+    /* grid-template-columns: 12rem auto 23rem; */
 }
 
 aside{
-    border: 20px solid red;
-    position: fixed;
+    border: 2px solid red;
+    /* position: fixed; */
+    /* z-index: 100; */
     height: 100vh;
+    width: 12vw;
 }
 
 aside .toggle{
@@ -113,14 +117,12 @@ aside .toggle .close{
 }
 
 aside .sidebar{
-    border: 2px solid rebeccapurple;
     display: flex;
     flex-direction: column;
     background-color: var(--color-white);
     box-shadow: var(--box-shadow);
     border-radius: 15px;
     height: 88vh;
-    position: relative;
     top: 1.5rem;
     transition: all 0.3s ease;
 }
@@ -187,12 +189,19 @@ aside .sidebar .message-count{
 }
 
 main{
-    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid black;
+    /* position:inherit; */
+    /* border: 2px solid red; */
+    padding-top: 1.4rem;
 }
 
 main .analyse{
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.6rem;
 }
 
@@ -270,7 +279,7 @@ main .analyse .progresss .percentage{
 }
 
 main .new-users{
-    margin-top: 1.3rem;
+    margin-top: 2rem;
 }
 
 main .new-users .container-list{
@@ -297,7 +306,6 @@ main .new-users .user-list{
     align-items: center;
     justify-content: center;
     height: 60vh;
-    /* border: 2px solid red; */
 }
 
 main .new-users .users-list{
@@ -330,7 +338,6 @@ main .new-users .user-list .styledContainer .grid{
 }
 
 main .new-users .user-list .styledContainer .grid2{
-    border: 2px solid red;
     display: flex;
     justify-content: space-between;
     gap: 5%;
@@ -341,8 +348,6 @@ main .new-users .user-list .styledContainer .grid .card{
     background-color: var(--color-white);
     border-radius: 0.5rem;
     padding: 1.5rem;
-    /* box-shadow: var(--box-shadow); */
-    /* box-shadow: var(--box-shadow); */
     box-shadow: 15px 15px 30px #cce5ff,
     -15px -15px 30px #ffffff;
     transition: 0.2s ease-in-out;
@@ -408,7 +413,7 @@ main .new-users .user-list .user img{
 }
 
 main .recent-orders{
-    margin-top: 1.3rem;
+    margin-top: 2rem;
 }
 
 main .recent-orders h2{
@@ -448,6 +453,7 @@ main .recent-orders a{
 
 .right-section{
     /* border: 2px solid red; */
+    /* position:static; */
     margin-top: 1.4rem;
 }
 
@@ -781,7 +787,6 @@ main .recent-orders a{
     display: block;
     width: fit-content;
     height: fit-content;
-    margin: 2px solid red;
     color: blue;
 }
 .Export:hover{
@@ -790,7 +795,16 @@ main .recent-orders a{
 }
 
 .datos-paciente{
+    padding-top: 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.button-site{
+    padding-top: 1px;
+    display: flex;
+    justify-content: right;
+    z-index: 1000;
+    flex-basis: 35%;
 }

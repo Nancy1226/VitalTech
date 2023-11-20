@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {useContext} from "react";
 import UserContext from '../../context/UserContext';
-import '../styles/Dashboard.css'
+import '../../assets/styles/Dashboard.css'
 import { images } from '../../images/images';
 
 

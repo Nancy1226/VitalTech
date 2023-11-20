@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useRef } from "react";
+import {createUser, apiEmail} from "../../api/routes";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -11,7 +12,7 @@ import Img from "../atoms/Img";
 import {images} from '../../images/images.js'
 import GroupInput from "../molecules/GroupInput";
 import Button from "../atoms/Button";
-import "../../components/styles/Forms.css"
+import "../../assets/styles/Forms.css";
 import GroupLink from "../molecules/GroupLink.jsx";
 
 
@@ -83,17 +84,10 @@ function FormRegister() {
                   console.log("Por favor acepta el captcha")
                 }
 
-                const apiKey = "at_zflcKeL04C6TIHqOakfltmZ62ApzQ";
                 const emailAddress = valores.email;
-
-                const apiUrl = `https://emailverification.whoisxmlapi.com/api/v3?apiKey=${apiKey}&emailAddress=${emailAddress}`;
-                axios.get(apiUrl).then((response) => {
+                apiEmail(emailAddress)
+                .then((response) => {
                   const responseData = response.data;
-
-                  console.log(
-                    "-----------imprimiendo el response del api correo-------------"
-                  );
-                  console.log(responseData);
 
                   if (responseData.smtpCheck === "true") {
                     console.log("La verificación de formato es verdadera");
@@ -104,16 +98,9 @@ function FormRegister() {
                       password: valores.password
                     }
                     
-                    axios
-                      .post("http://localhost:4000/api/signup", objectDataFront)
-
+                   
+                      createUser(objectDataFront)
                       .then((signupResponse) => {
-                        console.log(
-                          "***********************Viendo el estatus de la API de registro*****************************"
-                        );
-                        console.log(signupResponse.status);
-
-
                           resetForm();
 
                           if (signupResponse.status === 201) {
@@ -128,11 +115,7 @@ function FormRegister() {
 
                       })
                       .catch((signupError, signupResponse) => {
-                        console.log(
-                          "***********************Viendo el estatus de la API de registro*****************************"
-                        );
-                        console.log(signupResponse.status);
-                        
+                                                
                         if (signupResponse.status === 400) {
                           Swal.fire({
                             icon: "error",
@@ -166,7 +149,7 @@ function FormRegister() {
                 handleChange,
                 handleBlur,
               }) => (
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   <Title msn={"Registro"} />
                   <Label
                     txt={"Signos vitales"}
@@ -241,7 +224,7 @@ function FormRegister() {
                     txt={"¿Ya tienes una cuenta?"}
                     msn={"Inicia Sesion"}
                   />
-                </form>
+                </Form>
               )}
             </Formik>
           </StyledContainerForm>

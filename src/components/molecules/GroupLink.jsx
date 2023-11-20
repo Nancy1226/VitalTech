@@ -1,4 +1,4 @@
-import '../styles/Forms.css';
+import '../../assets/styles/Forms.css';
 import { Link } from 'react-router-dom';
 
 function GroupLink({ to, txt, msn }) {

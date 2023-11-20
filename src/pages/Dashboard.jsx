@@ -1,4 +1,4 @@
-// import "../components/styles/Dashboard.css";
+import "../assets/styles/Dashboard.css";
 
 import Navbar from "../components/organisms/Navbar";
 import BodyDashboard from "../components/organisms/BodyDashboard";
@@ -11,7 +11,6 @@ function Dashboard() {
 
     <Navbar />
     <BodyDashboard />
-    <DarkSection />
     
     </div>
 

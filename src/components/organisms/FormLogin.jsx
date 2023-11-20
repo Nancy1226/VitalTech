@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useRef} from 'react';
+import { loginUser } from '../../api/routes';
 import ReCAPTCHA from "react-google-recaptcha";
 import Swal from 'sweetalert2';
 import axios from "axios";
@@ -11,13 +12,14 @@ import Img from "../atoms/Img";
 import {images} from '../../images/images.js'
 import GroupInput from "../molecules/GroupInput";
 import Button from "../atoms/Button";
-import "../../components/styles/Forms.css"
+import "../../assets/styles/Forms.css";
 import GroupLink from "../molecules/GroupLink.jsx";
 import UserContext from '../../context/UserContext.js';
 
 function FormLogin() {
   const { setIsLoged } = useContext(UserContext);
   const { setUserName } = useContext(UserContext);
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
   const captcha = useRef(null);
 
@@ -70,17 +72,26 @@ function FormLogin() {
                 }else{
                   console.log("Por favor acepta el captcha")
                 }
-                  const response = await axios.post("http://localhost:4000/api/signin", values, { withCredentials: true });
-                  Swal.fire({
-                    icon: "success",
-                    title: "Bienvenido",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
+              
+                const response = await loginUser(values);
+                  
+                  console.log(response.status);
+
+                  if (response.status === 200) {
+                    Swal.fire({
+                      icon: "success",
+                      title: "Bienvenido",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                   
+                  }
                   await new Promise((resolve) => {
-                    window.localStorage.setItem( "loggedUser", JSON.stringify(response.data));
+                    window.localStorage.setItem( "loggedUser", JSON.stringify(response.data.userName));
                     resolve();
                   });
+                  const cookies = response.headers['access_token'];
+                  console.log('Cookies de la respuesta:' + cookies);
                   setIsLoged(true);
                   setUserName(response.data.userName);
                   console.log("imprimiendo el response de la api " + (response.data.userName))
@@ -103,7 +114,7 @@ function FormLogin() {
             >
               {({ values, errors, touched,handleSubmit, handleChange, handleBlur }) => (
 
-                  <form onSubmit={handleSubmit}>
+                  <Form onSubmit={handleSubmit}>
                   <Title msn={"Inicio de sesion"} />
                   <Label
                     txt={"Signos vitales"}
@@ -144,7 +155,7 @@ function FormLogin() {
                   <Button name={"Iniciar sesion"} />
 
                   <GroupLink to={'/register'} txt={"¿No tienes una cuenta?"} msn={"Regístrate"} /> 
-                </form>
+                </Form>
               )}
             </Formik>
           </StyledContainerForm>

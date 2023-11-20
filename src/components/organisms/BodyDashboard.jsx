@@ -1,8 +1,26 @@
+import { getAllVital } from "../../api/routes";
 import GroupCards from "../molecules/GroupCards";
 import GraphicGroup from "../molecules/GraphicGroup";
-
+import { useEffect, useState } from "react";
 
 function BodyDashboard() {
+  const [datosFiltrados, setDatosFiltrados] = useState([]);
+
+  useEffect (() => {
+  const getVital = async() =>{
+    try {
+      // const fechaActual = new Date();
+      // const fechaMedicion = new Date(dato.created_at);
+      const response = await getAllVital(); 
+      console.log(response.data)
+
+    } catch (error) {
+      console.error('Error al obtener los datos vitales:', error);
+    }
+
+  } 
+    getVital();
+  }, []);
 
     return (
       <>
@@ -20,6 +38,13 @@ function BodyDashboard() {
                 title={"Pulsaciones por minuto"}
                 info={"14,147"}
                 porcentaje={"21%"}
+              />
+            </div>
+            <div class="searches">
+              <GroupCards
+                title={"Oxígeno en sangre"}
+                info={"24,981"}
+                porcentaje={"48%"}
               />
             </div>
             <div class="searches">
