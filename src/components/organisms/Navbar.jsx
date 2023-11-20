@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
-import axios from "axios";
-import { useContext } from "react";
+import "../../assets/styles/Load.css"
+import { useContext, useState } from "react";
 import UserContext from "../../context/UserContext";
 import { images } from "../../images/images";
 import { logoutUser } from "../../api/routes";
@@ -8,14 +8,17 @@ import { logoutUser } from "../../api/routes";
 function Navbar() {
     const {userName, setUserName} = useContext(UserContext);
     const {setIsLoged} = useContext(UserContext);
-
+    const [loading, setLoading] = useState(false);
+    
     const logout = async () => {
+      setLoading(true);
         window.localStorage.removeItem("loggedUser");
         setIsLoged(false);
         setUserName("");
         const res = await logoutUser
         console.log(res);
         console.log("Cerrar sesion, limpiando cookie..");
+        setLoading(false);
       }
 
     return (
@@ -53,6 +56,7 @@ function Navbar() {
                 logout
               </span>
               <h3>Logout</h3>
+              {loading && <div className="loader">a</div>}
             </NavLink>
           </div>
         </aside>

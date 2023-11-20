@@ -36,6 +36,7 @@ function BodyDashboard() {
     return (
       <>
         <main>
+
           <div class="analyse">
             <div class="sales">
               <GroupCards
@@ -58,14 +59,8 @@ function BodyDashboard() {
                 porcentaje={"48%"}
               />
             </div>
-            <div class="searches">
-              <GroupCards
-                title={"Oxígeno en sangre"}
-                info={"24,981"}
-                porcentaje={"48%"}
-              />
-            </div>
           </div>
+
           <h2>La probabilidad de que usted tenga Fiebre es de : {probability} %</h2>
           <h4> ** Los datos son calculados a partir de su ultima medición ** </h4>
           <div class="new-users">

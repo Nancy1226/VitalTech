@@ -192,17 +192,18 @@ aside .sidebar .message-count{
 
 main{
     position: absolute;
-    left: 15%;
-    width: 58vw;
-    padding-top: 1.4rem;
+    left: 16%;
+    width: 55vw;
+    padding-top: 1.8rem;
 }
 
 main .analyse{
-    /* display: flex; */
-    /* flex-direction: row; */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* grid-template-columns: repeat(4, 1fr); */
     gap: 1.6rem;
+    margin-bottom: 3rem;
 }
 
 main .analyse > div{
@@ -452,11 +453,10 @@ main .recent-orders a{
 }
 
 .right-section{
-    /* position:static; */
     position: fixed;
     width: 24vw;
     right: 2%;
-    padding-top: 1.4rem;
+    padding-top: 1.7rem;
 }
 
 .right-section .nav{

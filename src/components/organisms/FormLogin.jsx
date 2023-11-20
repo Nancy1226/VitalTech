@@ -74,28 +74,21 @@ function FormLogin() {
                 }
               
                 const response = await loginUser(values);
-                  
-                  console.log(response.status);
-
-                  if (response.status === 200) {
+                  if(response.status === 200){
                     Swal.fire({
                       icon: "success",
                       title: "Bienvenido",
                       showConfirmButton: false,
                       timer: 1500,
                     });
-                   
                   }
-                  await new Promise((resolve) => {
-                    window.localStorage.setItem( "loggedUser", JSON.stringify(response.data.userName));
-                    resolve();
-                  });
-                  const cookies = response.headers['access_token'];
-                  console.log('Cookies de la respuesta:' + cookies);
-                  setIsLoged(true);
-                  setUserName(response.data.userName);
-                  console.log("imprimiendo el response de la api " + (response.data.userName))
-                  navigate("/dashboard");
+                await new Promise((resolve) => {
+                  window.localStorage.setItem( "loggedUser", JSON.stringify(response.data.userName));
+                  resolve();
+                });
+                setIsLoged(true);
+                setUserName(response.data.userName);
+                navigate("/dashboard");
                 } catch (error) {
                   Swal.fire({
                     icon: "error",
