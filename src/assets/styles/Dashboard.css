@@ -9,17 +9,19 @@
     --color-info-dark: #7d8da1;
     --color-dark: #363949;
     --color-light: rgba(132, 139, 200, 0.18);
+    --color-blue: rgb(201, 234, 252);
     --color-dark-variant: #677483;
     --color-background: #f6f6f9;
 
     --card-border-radius: 2rem;
     --border-radius-1: 0.4rem;
     --border-radius-2: 1.2rem;
-
+    --color-background-dark: #e8e8e8;
     --card-padding: 1.8rem;
     --padding-1: 1.2rem;
 
     --box-shadow: 0 2rem 3rem var(--color-light);
+    --box-shadow-2: 0 2rem 3rem var(--color-blue);
 }
 
 .dark-mode-variables{
@@ -73,24 +75,31 @@ b{
 }
 
 .container{
-    /* border: 2px solid black; */
-    display: grid;
+    /* display: grid; */
+    display: flex;
+    flex-direction: row;
     width: 96%;
     margin: 0 auto;
     gap: 1.8rem;
-    grid-template-columns: 12rem auto 23rem;
+    /* grid-template-columns: 12rem auto 23rem; */
 }
 
 aside{
-    /* border: 2px solid salmon; */
-    height: 100vh;
+    /* border: 2px solid red; */
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    position: fixed;
+    z-index: 100;
+    /* height: 100vh; */
+    width: 12vw;
 }
 
 aside .toggle{
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-top: 1.4rem;
+    margin-top: 1.5rem;
 }
 
 aside .toggle .logo{
@@ -99,8 +108,9 @@ aside .toggle .logo{
 }
 
 aside .toggle .logo img{
-    width: 100%;
-    height: 20%;
+    /* border: 2px solid red; */
+    width: 3.8rem;
+    height: 3rem;
 }
 
 aside .toggle .close{
@@ -115,7 +125,6 @@ aside .sidebar{
     box-shadow: var(--box-shadow);
     border-radius: 15px;
     height: 88vh;
-    position: relative;
     top: 1.5rem;
     transition: all 0.3s ease;
 }
@@ -182,14 +191,19 @@ aside .sidebar .message-count{
 }
 
 main{
-    /* border: 2px solid rebeccapurple; */
-    margin-top: 1.4rem;
+    position: absolute;
+    left: 16%;
+    width: 55vw;
+    padding-top: 1.8rem;
 }
 
 main .analyse{
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* grid-template-columns: repeat(4, 1fr); */
     gap: 1.6rem;
+    margin-bottom: 3rem;
 }
 
 main .analyse > div{
@@ -266,10 +280,10 @@ main .analyse .progresss .percentage{
 }
 
 main .new-users{
-    margin-top: 7rem;
+    margin-top: 2rem;
 }
 
-main .new-users .user-list{
+main .new-users .container-list{
     background-color: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-border-radius);
@@ -281,6 +295,104 @@ main .new-users .user-list{
     gap: 1.4rem;
     cursor: pointer;
     transition: all 0.3s ease;
+}
+
+main .new-users .user-list{
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 60vh;
+}
+
+main .new-users .users-list{
+    background-color: var(--color-white);
+    padding: var(--card-padding);
+    border-radius: var(--card-border-radius);
+    margin-top: 1rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    height: max-content;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.4rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+main .new-users .user-list .styledContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5rem;
+}
+
+main .new-users .user-list .styledContainer .grid{
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+}
+
+main .new-users .user-list .styledContainer .grid2{
+    display: flex;
+    justify-content: space-between;
+    gap: 5%;
+    width: 60%;
+}
+
+main .new-users .user-list .styledContainer .grid .card{
+    background-color: var(--color-white);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 15px 15px 30px #cce5ff,
+    -15px -15px 30px #ffffff;
+    transition: 0.2s ease-in-out;
+    text-align: center;
+    height: 20vh;
+    width: 15vw;
+}
+
+main .new-users .user-list .styledContainer .grid2 .card{
+    background-color: var(--color-white);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    /* box-shadow: var(--box-shadow); */
+    box-shadow: 15px 15px 30px #cce5ff,
+    -15px -15px 30px #ffffff;
+    transition: 0.2s ease-in-out;
+    text-align: center;
+    height: 20vh;
+    width: 15vw;
+}
+
+main .new-users .user-list .styledContainer .grid .card h2{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+main .new-users .user-list .styledContainer .grid2 .card h2{
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+main .new-users .user-list .styledContainer .grid .card p{
+    color:var(--color-dark);
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+main .new-users .user-list .styledContainer .grid2 .card p{
+    color:var(--color-dark);
+    text-align: center;
+    font-size: 1.1rem;
 }
 
 main .new-users .user-list:hover{
@@ -341,8 +453,10 @@ main .recent-orders a{
 }
 
 .right-section{
-    /* border: 2px solid red; */
-    margin-top: 1.4rem;
+    position: fixed;
+    width: 24vw;
+    right: 2%;
+    padding-top: 1.7rem;
 }
 
 .right-section .nav{
@@ -567,7 +681,7 @@ main .recent-orders a{
         width: 15rem;
         z-index: 3;
         box-shadow: 1rem 3rem 4rem var(--color-light);
-        height: 100vh;
+        height: 100%;
         left: -100%;
         display: none;
         animation: showMenu 0.4s ease forwards;
@@ -675,7 +789,6 @@ main .recent-orders a{
     display: block;
     width: fit-content;
     height: fit-content;
-    margin: 2px solid red;
     color: blue;
 }
 .Export:hover{
@@ -684,7 +797,7 @@ main .recent-orders a{
 }
 
 .datos-paciente{
-    padding-top: 5rem;
+    padding-top: 4rem;
     display: flex;
     justify-content: space-between;
     align-items: center;

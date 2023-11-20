@@ -27,6 +27,11 @@ export default GroupInput;
 const StyledContainerInput = styled.div`
     display: flex;
     flex-direction: column;
+    gap: 3px;
+    @media (min-width: 1024px) {
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+    }  
     /* border: 2px solid rebeccapurple; */
 `;

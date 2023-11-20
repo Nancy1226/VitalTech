@@ -51,22 +51,22 @@ const data = [
 
 ];
 
-function Graphic({color1, color2, datos,columnas, variable, dataKey1, dataKey2}) {
+function Graphic({color1, color2, datos,columnas, variable, dataKey1, dataKey2, name1, name2}) {
     console.log(columnas);
     
     const renderBars = () => {
         if (columnas === 2) {
           return (
             <>
-              <Bar key="bar-distolica" dataKey={dataKey1} barSize={30} fill={color1} />
-              <Bar key="bar-sistolica" dataKey={dataKey2} barSize={30} fill={color2} />
+              <Bar key="bar-distolica" dataKey={dataKey1} barSize={30} fill={color1} name={name1}/>
+              <Bar key="bar-sistolica" dataKey={dataKey2} barSize={30} fill={color2} name={name2}/>
             </>
           );
         } else if (columnas === 1) {
           return(
           <>
-          <Bar key="bar-distolica" dataKey={dataKey1} barSize={30} fill={color1} />;
-          <Line type="monotone" dataKey={dataKey1} stroke="#009dff" />
+          <Bar key="bar-distolica" dataKey={dataKey1} barSize={30} fill={color1} name={name1}/>;
+          <Line type="monotone" dataKey={dataKey1} stroke="#009dff"  name='Desviacion'/>
           </>) 
          
         }
@@ -79,7 +79,7 @@ function Graphic({color1, color2, datos,columnas, variable, dataKey1, dataKey2})
         <ComposedChart
             width={600}
             height={300}
-            data={data}
+            data={datos}
             margin={{
               top: 20,
               right: 20,
@@ -88,7 +88,7 @@ function Graphic({color1, color2, datos,columnas, variable, dataKey1, dataKey2})
             }}
         >
         <CartesianGrid stroke="#f5f5f5" />
-        <XAxis dataKey="name"  padding={{ left: 10, right: 10 }} />
+        <XAxis dataKey="fechaPromedio" padding={{ left: 10, right: 10 }} tick={{ fontSize: 11 }} />
         <YAxis>
         <Label
               value={variable}

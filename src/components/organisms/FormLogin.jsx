@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Formik, Form, Field } from "formik";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState, useContext, useRef} from 'react';
+import { loginUser } from '../../api/routes';
 import ReCAPTCHA from "react-google-recaptcha";
 import Swal from 'sweetalert2';
 import axios from "axios";
@@ -11,13 +12,14 @@ import Img from "../atoms/Img";
 import {images} from '../../images/images.js'
 import GroupInput from "../molecules/GroupInput";
 import Button from "../atoms/Button";
-import "../../components/styles/Forms.css"
+import "../../assets/styles/Forms.css";
 import GroupLink from "../molecules/GroupLink.jsx";
 import UserContext from '../../context/UserContext.js';
 
 function FormLogin() {
   const { setIsLoged } = useContext(UserContext);
   const { setUserName } = useContext(UserContext);
+  const [token, setToken] = useState('');
   const navigate = useNavigate();
   const captcha = useRef(null);
 
@@ -70,21 +72,23 @@ function FormLogin() {
                 }else{
                   console.log("Por favor acepta el captcha")
                 }
-                  const response = await axios.post("http://localhost:4000/api/signin", values, { withCredentials: true });
-                  Swal.fire({
-                    icon: "success",
-                    title: "Bienvenido",
-                    showConfirmButton: false,
-                    timer: 1500,
-                  });
-                  await new Promise((resolve) => {
-                    window.localStorage.setItem( "loggedUser", JSON.stringify(response.data));
-                    resolve();
-                  });
-                  setIsLoged(true);
-                  setUserName(response.data.userName);
-                  console.log("imprimiendo el response de la api " + (response.data.userName))
-                  navigate("/dashboard");
+              
+                const response = await loginUser(values);
+                  if(response.status === 200){
+                    Swal.fire({
+                      icon: "success",
+                      title: "Bienvenido",
+                      showConfirmButton: false,
+                      timer: 1500,
+                    });
+                  }
+                await new Promise((resolve) => {
+                  window.localStorage.setItem( "loggedUser", JSON.stringify(response.data.userName));
+                  resolve();
+                });
+                setIsLoged(true);
+                setUserName(response.data.userName);
+                navigate("/dashboard");
                 } catch (error) {
                   Swal.fire({
                     icon: "error",
@@ -101,9 +105,9 @@ function FormLogin() {
               }}
 
             >
-              {({ values, errors, touched,handleSubmit, handleChange, handleBlur }) => (
+              {({ values, errors, touched,handleSubmit, handleChange, handleBlur, isSubmitting }) => (
 
-                  <form onSubmit={handleSubmit}>
+                  <Form onSubmit={handleSubmit}>
                   <Title msn={"Inicio de sesion"} />
                   <Label
                     txt={"Signos vitales"}
@@ -141,10 +145,12 @@ function FormLogin() {
                   sitekey="6Lc6YA8pAAAAAPIEg8YBkmffcCSzporvrtNWyXb1" onChange={onChange}
                   />
 
-                  <Button name={"Iniciar sesion"} />
+                  <StyledButton type='submit' disabled={isSubmitting}>
+                            {isSubmitting ? "Iniciando.." : "Iniciar Sesión"}
+                  </StyledButton>
 
                   <GroupLink to={'/register'} txt={"¿No tienes una cuenta?"} msn={"Regístrate"} /> 
-                </form>
+                </Form>
               )}
             </Formik>
           </StyledContainerForm>
@@ -177,6 +183,17 @@ const StyledContainer = styled.div`
 `;
 
 const StyledContainerForm = styled.div`
+    width: 100%;
+  height: 100vh;
+  form {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+  }
+  @media (min-width: 1024px) { 
   width: 50%;
   height: 100vh;
     form {
@@ -188,6 +205,7 @@ const StyledContainerForm = styled.div`
       align-items: center;
       gap: 20px;
     }
+  }
 `;
 
 
@@ -202,12 +220,34 @@ const StyledContainerIcon = styled.div`
     }
 `;
 
-
-
-
 const StyledContainerImg = styled.div`
-    /* border: 2px solid rebeccapurple;} */
+    display: none;
+    @media (min-width: 1024px) {
     display: flex;
     width: 50%;
     height: 100%;    
+  }
+`;
+
+const StyledButton = styled.button`
+    width: 446px;
+    height: 58px;
+    color: white;
+    border-radius: 8px;
+    border: 1px solid #D9D9D9;
+    background: #075BBB;
+    text-align: center;
+    font-family: 'Inter';
+    font-size: 1.6em;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border: none;
+    margin-top: 2%;
+    /* padding: 1vh 3%; */
+    &:hover {
+        cursor: pointer;
+        transition: background-color 0.7s;
+    }
+
 `;

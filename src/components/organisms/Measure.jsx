@@ -10,13 +10,44 @@ function Measure() {
     const arrayTemp = [];
 
     const [showModal, setShowModal] = useState(false);
+    const [connected, setConnected] = useState(false);
     const [promedioOxi, setPromedioOxi] = useState(0);  
     const [promedioTemp, setpromedioTemp] = useState(0)
     const [promedioPPM, setpromedioPPM] = useState(0)
     const [sistolica, setsistolica] = useState(0)
     const [diastolica, setdiastolica] = useState(0)
 
-    const socket = io("http://50.19.138.200:3000");
+   
+    const socket = io("wss://websocket-server.testsoftware.dev:3000");
+
+    useEffect(() => {
+        // Manejar eventos de conexión
+        socket.on("connect", () => {
+          console.log("Conectado al servidor WebSocket");
+          setConnected(true);
+        });
+    
+        // Manejar eventos de desconexión
+        socket.on("disconnect", () => {
+          console.log("Desconectado del servidor WebSocket");
+          setConnected(false);
+        });
+    
+        // Manejar eventos de errores
+        socket.on("error", (error) => {
+          console.error("Error en la conexión WebSocket:", error);
+        });
+    
+        // Devuelve una función de limpieza para desconectar el socket cuando el componente se desmonta
+        return () => {
+          if (socket.connected) {
+            socket.disconnect();
+            setConnected(false);
+          }
+        };
+      }, []);
+    
+    
     
     socket.on("sensor_data_front_ppm", (newData) => {
           arrayPPM.push(newData);
@@ -32,6 +63,12 @@ function Measure() {
  
     const iniciar = async() => {
         try {
+
+            if (!connected) {
+                // Solo intenta conectar si no está conectado
+                socket.connect();
+              }
+              
             if (socket.connected) {
                 alert("Mensaje enviado a la raspberry");
                 socket.emit('conexion', "Iniciar");
@@ -139,30 +176,59 @@ function Measure() {
 
     }
 
-    return ( 
-        <main>
-            
-            <div class="new-users">
-            <h2>Medición</h2>
-                <div class="button-site">
-                   <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
+    return (
+      <main>
+        <div class="new-users">
+          <h2>Medición</h2>
+          <div class="container-list">
+            <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
+          </div>
+          <div class="user-list">
+            <div className="styledContainer">
+              
+              <div class="grid">
+                <div className="card">
+                  <h2>Temperatura corporal: </h2>
+                  <span class="material-icons-sharp">device_thermostat</span>
+                  <p>{promedioTemp} °C</p>
                 </div>
-                <div class="user-list">
-                    {showModal && <Modal />}
-                    <div>
-                        <h2>Temperatura corporal: {promedioTemp} °C</h2>
-                        <h2>Frecuencia cardiaca:  {promedioPPM} PPM </h2>
-                        <h2>Oxigeno en sangre: {promedioOxi} % </h2>
-                        <h2>Presion Sistolica: {sistolica} mmHg</h2>
-                        <h2>Presion Diastolica: {diastolica} mmHg</h2>
-                    </div>
-                    
+                <div className="card">
+                  <h2>Frecuencia cardiaca: </h2>
+                  <span class="material-symbols-outlined">
+                    cardiology
+                    </span>
+                  <p>{promedioPPM} PPM </p>
                 </div>
+                <div className="card">
+                  <h2>Oxigeno en sangre: </h2>
+                  <span class="material-symbols-outlined">
+                    spo2
+                    </span>
+                  <p>{promedioOxi} % </p>
+                </div>
+              </div>
 
+              <div class="grid2">
+                <div className="card">
+                  <h2>Presión Sistólica: </h2>
+                  <span class="material-symbols-outlined">
+                    blood_pressure
+                    </span>
+                  <p>{sistolica} mmHg</p>
+                </div>
+                <div className="card">
+                  <h2>Presión Diastólica: </h2>
+                  <span class="material-symbols-outlined">
+                    health_metrics
+                    </span>
+                  <p>{diastolica} mmHg</p>
+                </div>
+              </div>
             </div>
-
-        </main>
-     );
+          </div>
+        </div>
+      </main>
+    );
 }
 
 export default Measure;

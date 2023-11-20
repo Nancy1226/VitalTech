@@ -12,9 +12,7 @@ import pdfPNG from '../../assets/pdf.png'
 function HistorySection() {
   const {userName, setUserName} = useContext(UserContext);
   const [signos, setsignos] = useState([])
-
   const [showExportButton, setShowExportButton] = useState(true);
-
   const [activoIMG, setactivoIMG] = useState(false)
 
   useEffect(() => {
@@ -64,8 +62,8 @@ function HistorySection() {
     }
     
 };
-
     return (
+      
         <>
         <main id="content-to-pdf">
 
@@ -102,10 +100,10 @@ function HistorySection() {
               <thead>
                 <tr>
                   <th>Frecuencia cardiaca</th>
+                  <th>Presion sistolica</th>
+                  <th>Presion diastolica</th>
                   <th>Oxígeno en sangre</th>
-                  <th>Temperatura</th>
-                  <th>Presion arterial</th>
-                  <th>Fecha de medición</th>
+                  <th>Fecha</th>
                   <th></th>
                 </tr>
               </thead>
@@ -114,18 +112,19 @@ function HistorySection() {
               <tbody>
                   {signos.map((item) =>(
                       <tr>
-                      <td>{item.heart_rate}</td>
-                      <td>{item.systolic_pressure}</td>
-                      <td>{item.diastolic_pressure}</td>
-                      <td>{item.blood_oxygen}</td>
+                      <td>{item.heart_rate} PPM</td>
+                      <td>{item.blood_oxygen} %</td>
+                      <td>{item.temperature} °C</td>
+                      <td>{item.systolic_pressure} / {item.diastolic_pressure} </td>
                       <td>
                       {" "}
                     {format(
                       new Date(
-                        item.create_at.split("T")[0].split("-")
+                        item.created_at.split("T")[0].split("-")
                       ),
                       "dd - MM - yyyy"
                     )}  </td>
+                    
                       </tr>
                   ))}
                
