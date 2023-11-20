@@ -5,8 +5,8 @@ function Modal() {
     return (  
         <>
             <div class="modal">
-                <div class="overlay"></div>
                 <div class="modal-content">
+                    <div class='align-data'>
                     
                     <div class="loading">
                         <svg width="84px" height="48px">
@@ -26,7 +26,7 @@ function Modal() {
     
                     
                     <h2>Estamos tomando sus signos vitales espere un momento</h2>
-                    
+                    </div>
                 </div>
             </div>
             

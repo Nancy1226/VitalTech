@@ -1,23 +1,24 @@
-.modal, .overlay {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: fixed;
+.modal{
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  backdrop-filter:blur(5px);
+  background: rgba(49,49,49,0.8);
+  display: flex;
+  align-items:center;
+  justify-content: center;
+
 }
 
-.overlay {
-    backdrop-filter: blur(6px);
-    background: rgba(49,49,49,0.8);
-}
-.modal-content {
+.modal .modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+
     line-height: 1.4;
     background: #f1f1f1;
     padding: 14px 28px;
@@ -25,6 +26,17 @@
     max-width: 600px;
     min-width: 300px;
 }
+
+
+
+.aling-data{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
 
 
 .loading svg polyline {

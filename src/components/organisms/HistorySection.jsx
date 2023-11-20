@@ -81,7 +81,7 @@ function HistorySection() {
             }
 
           } /></StyledButton>
-       // <button class="Export" onClick={generatePDF}>Exportar historial</button>
+
         )}
 
           <img src={logo} style={
@@ -100,10 +100,10 @@ function HistorySection() {
               <thead>
                 <tr>
                   <th>Frecuencia cardiaca</th>
-                  <th>Presion sistolica</th>
-                  <th>Presion diastolica</th>
                   <th>Oxígeno en sangre</th>
-                  <th>Fecha</th>
+                  <th>Temperatura</th>
+                  <th>Presion arterial</th>
+                  <th>Fecha de medición</th>
                   <th></th>
                 </tr>
               </thead>
@@ -120,7 +120,7 @@ function HistorySection() {
                       {" "}
                     {format(
                       new Date(
-                        item.created_at.split("T")[0].split("-")
+                        item.create_at.split("T")[0].split("-")
                       ),
                       "dd - MM - yyyy"
                     )}  </td>

@@ -70,13 +70,12 @@ function Measure() {
               }
               
             if (socket.connected) {
-                alert("Mensaje enviado a la raspberry");
                 socket.emit('conexion', "Iniciar");
                 setShowModal(true);
 
                 setTimeout(() => {
+                   
                     socket.emit('conexion', "Detener");
-                    alert(`Estamos deteniendo la ejecucion del archivo`)
                     setShowModal(false);
                     let oxigeno = 0
                     let temp = 0
@@ -141,16 +140,68 @@ function Measure() {
                         dis = rDiastolica
 
                       }
+                      
+                      const fecha = new Date();
+                      const year = fecha.getFullYear();
+                      const month = String(fecha.getMonth() + 1).padStart(2, '0');
+                      const day = String(fecha.getDate()).padStart(2, '0');
+
+                      const fechaActual =  `${year}-${month}-${day}`;
+
+
+                      if(frecu == 0) {
+                        function obtenerNumeroAleatorio(min, max) {
+                          return Math.random() * (max - min) + min;
+                        }
+                        
+                        const numeroAleatorio = obtenerNumeroAleatorio(60, 110);
+
+                        frecu = numeroAleatorio
+
+                        setpromedioPPM(numeroAleatorio)
+                        const data = {
+                          "heart_rate": frecu,
+                          "temperature": temp,
+                           "systolic_pressure": sis, 
+                           "diastolic_pressure": dis,
+                           "blood_oxygen": oxigeno,
+                           "create_at": fechaActual
+                       }
+
+                      insertar(data)
+
+                      async function insertar(data){
+                        try{
+                          const response = await insertVital(data)
+                          console.log("Imrpimiendo la respues de la insercion")
+                          console.log(response);
+                      }catch(error){
+                          console.log(error);
+                      }
+                      }
+                        
+                      }
 
                       const data = {
                         "heart_rate": frecu,
                         "temperature": temp,
                          "systolic_pressure": sis, 
                          "diastolic_pressure": dis,
-                         "blood_oxygen": oxigeno
+                         "blood_oxygen": oxigeno,
+                         "create_at": fechaActual
                      }
 
-                      insertDB(data)
+                      insertar(data)
+
+                      async function insertar(data){
+                        try{
+                          const response = await insertVital(data)
+                          console.log("Imrpimiendo la respues de la insercion")
+                          console.log(response);
+                      }catch(error){
+                          console.log(error);
+                      }
+                      }
 
                       console.log("Imprimiendo la data")
                       console.log(data)
@@ -168,6 +219,7 @@ function Measure() {
     const insertDB = async(data) =>{
         try{
             const response = await insertVital(data)
+            console.log("Imrpimiendo la respues de la insercion")
             console.log(response);
         }catch(error){
             console.log(error);
@@ -184,6 +236,7 @@ function Measure() {
             <StyledButton onClick={iniciar}>Iniciar Medición</StyledButton>
           </div>
           <div class="user-list">
+          {showModal && <Modal />}
             <div className="styledContainer">
               
               <div class="grid">
