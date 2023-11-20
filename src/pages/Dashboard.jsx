@@ -11,7 +11,7 @@ function Dashboard() {
 
     <Navbar />
     <BodyDashboard />
-    
+    <DarkSection />
     </div>
 
     );
