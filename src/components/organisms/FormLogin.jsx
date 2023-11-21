@@ -69,11 +69,8 @@ function FormLogin() {
                 try {
                 if(captcha.current.getValue()){
                   console.log("El usuario no es un robot")
-                }else{
-                  console.log("Por favor acepta el captcha")
-                }
-              
-                const response = await loginUser(values);
+
+                  const response = await loginUser(values);
                   if(response.status === 200){
                     Swal.fire({
                       icon: "success",
@@ -83,12 +80,24 @@ function FormLogin() {
                     });
                   }
                 await new Promise((resolve) => {
-                  window.localStorage.setItem( "loggedUser", JSON.stringify(response.data.userName));
+                  window.localStorage.setItem( "loggedUser", JSON.stringify(response.data));
                   resolve();
                 });
                 setIsLoged(true);
-                setUserName(response.data.userName);
+                setUserName(response.data);
                 navigate("/dashboard");
+
+                }else{
+                  console.log("Por favor acepta el captcha")
+
+                  Swal.fire({
+                    icon: "error",
+                    title: "Error...",
+                    text: "Por favor complete el captcha",
+                  });
+                }
+              
+                
                 } catch (error) {
                   Swal.fire({
                     icon: "error",

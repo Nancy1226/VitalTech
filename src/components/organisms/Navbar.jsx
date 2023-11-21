@@ -44,7 +44,7 @@ function Navbar() {
 
             <NavLink to={"/dashboard"} exact activeClassName="active">
               <span class="material-icons-sharp">insights</span>
-              <h3>Analytics</h3>
+              <h3>Analiticas</h3>
             </NavLink>
             <NavLink to={"/history"} exact activeClassName="active">
               <span class="material-icons-sharp">settings</span>

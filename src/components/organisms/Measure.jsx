@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect,useContext } from "react";
 import io from "socket.io-client";
 import { insertVital } from "../../api/routes";
 import styled from "styled-components";
 import Modal from "../molecules/Modal";
 import Swal from 'sweetalert2';
+import UserContext from "../../context/UserContext";
 
 function Measure() {
+  const {userName, setUserName} = useContext(UserContext);
     const arrayPPM = [];
     const arrayOxi = [];
     const arrayTemp = [];
@@ -166,7 +168,8 @@ function Measure() {
                            "systolic_pressure": sis, 
                            "diastolic_pressure": dis,
                            "blood_oxygen": oxigeno,
-                           "create_at": fechaActual
+                           "create_at": fechaActual,
+                           "id_user": userName.user.id_user
                        }
 
                        insertDB(data)
@@ -190,7 +193,8 @@ function Measure() {
                          "systolic_pressure": sis, 
                          "diastolic_pressure": dis,
                          "blood_oxygen": oxigeno,
-                         "create_at": fechaActual
+                         "create_at": fechaActual,
+                         "id_user": userName.user.id_user
                      }
 
                      insertDB(data)
@@ -226,6 +230,7 @@ function Measure() {
         try{
             const response = await insertVital(data)
             console.log("Imrpimiendo la respues de la insercion")
+            console.log("Insertadooooooo")
             console.log(response);
         }catch(error){
             console.log(error);

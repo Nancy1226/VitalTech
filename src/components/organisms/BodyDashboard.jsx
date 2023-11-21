@@ -1,9 +1,11 @@
 import GroupCards from "../molecules/GroupCards";
 import GraphicGroup from "../molecules/GraphicGroup";
 import { getOneMesaure, getDataGraph, getProbability } from "../../api/routes";
-import { useEffect,useState } from "react";
+import { useEffect,useState, useContext } from "react";
+import UserContext from "../../context/UserContext";
 
 function BodyDashboard() {
+  const {userName} = useContext(UserContext);
   const [Datos, setDatos] = useState([])
   const [LastData, setLastData] = useState([])
   const [probability, setprobability] = useState()
@@ -12,10 +14,14 @@ function BodyDashboard() {
 
     async function obtener (){
       try{
-        const response = await getOneMesaure()
+
+        const response = await getOneMesaure(userName.user.id_user)
         setLastData(response.data)
-        const graphData = await getDataGraph();
-        const porcentaje = await getProbability()
+        let {temperature} = response.data
+        console.log("Imprimineod el serponse de las cartas:")
+        console.log(temperature)
+        const graphData = await getDataGraph(userName.user.id_user);
+        const porcentaje = await getProbability(userName.user.id_user)
         setprobability(porcentaje.data)
         setDatos(graphData.data.totalPromedios)
       }catch(error){
@@ -36,7 +42,7 @@ function BodyDashboard() {
             <div class="sales">
               <GroupCards
                 title={"Temperatura Corporal"}
-                info={`${LastData.temperature} °C`}
+                info={`${LastData.temperature ? LastData.temperature : 0} °C`}
                 porcentaje={ <span class="material-icons-sharp">device_thermostat</span>}
                
               />
@@ -44,9 +50,9 @@ function BodyDashboard() {
             <div class="visits">
               <GroupCards
                 title={"Frecuencia cardiaca"}
-                info={`${LastData.heart_rate} PPM`}
+                info={`${LastData.heart_rate ? LastData.heart_rate : 0} PPM`}
                 porcentaje={ <span class="material-symbols-outlined">
-                cardiology
+                cardiology  
                 </span>}
                 
               />
@@ -54,7 +60,7 @@ function BodyDashboard() {
             <div class="searches">
               <GroupCards
                 title={"Oxígeno en sangre"}
-                info={`${LastData.blood_oxygen} %`}
+                info={`${LastData.blood_oxygen ? LastData.blood_oxygen : 0} %`}
                 porcentaje={ <span class="material-symbols-outlined">
                 spo2
                 </span>}

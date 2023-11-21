@@ -10,7 +10,7 @@ import pdfPNG from '../../assets/pdf.png'
 
 
 function HistorySection() {
-  const {userName, setUserName} = useContext(UserContext);
+  const {userName} = useContext(UserContext);
   const [signos, setsignos] = useState([])
   const [showExportButton, setShowExportButton] = useState(true);
   const [activoIMG, setactivoIMG] = useState(false)
@@ -19,7 +19,7 @@ function HistorySection() {
 
     async function obtener (){
       try{
-        const response = await getAllVital()
+        const response = await getAllVital(userName.user.id_user)
         console.log("Estamos imprimiendo los datos que vienen")
         console.log(response.data)
         setsignos(response.data)
@@ -71,7 +71,7 @@ function HistorySection() {
         <div className='datos-paciente'>
           <div>
             <h2>Datos del paciente</h2>
-            <h3>Nombre: {userName}</h3>
+            <h3>Nombre: {userName.user.userName}</h3>
           </div>
           {showExportButton && (
           <StyledButton onClick={generatePDF}><img src={pdfPNG} style={

@@ -57,11 +57,11 @@ function DarkSection() {
             <div class="profile">
               <div class="info">
                 <p>
-                  Hola, <b>{userName}</b>
+                  Hola, <b>{userName.user.userName}</b>
                 </p>
                 <small class="text-muted">Usuario</small>
               </div>
-              <div class="profile-photo">
+              <div class="profile-photo"> 
                 <img src={images.icon} />
               </div>
             </div>
