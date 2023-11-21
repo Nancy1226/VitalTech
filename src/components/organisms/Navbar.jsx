@@ -37,7 +37,7 @@ function Navbar() {
           </div>
 
           <div class="sidebar">
-            <NavLink to={"/home"} exact activeClassName="active">
+            <NavLink to={"/measure"} exact activeClassName="active">
               <span class="material-icons-sharp">dashboard</span>
               <h3>Medir</h3>
             </NavLink>
