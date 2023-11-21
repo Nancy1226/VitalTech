@@ -220,6 +220,10 @@ main .analyse > div:hover{
     box-shadow: none;
 }
 
+.h1-card{
+    text-align: center;
+}
+
 main .analyse > div .status{
     display: flex;
     align-items: center;
@@ -251,19 +255,19 @@ main .analyse svg circle{
 }
 
 main .analyse .sales svg circle{
-    stroke: var(--color-success);
+    stroke: #1865d7;
     stroke-dashoffset: -30;
     stroke-dasharray: 200;
 }
 
 main .analyse .visits svg circle{
-    stroke: var(--color-danger);
+    stroke: #5819cc;
     stroke-dashoffset: -30;
     stroke-dasharray: 200;
 }
 
 main .analyse .searches svg circle{
-    stroke: var(--color-primary);
+    stroke: #34ad70;
     stroke-dashoffset: -30;
     stroke-dasharray: 200;
 }

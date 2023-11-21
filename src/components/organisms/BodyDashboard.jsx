@@ -1,4 +1,3 @@
-import { getAllVital } from "../../api/routes";
 import GroupCards from "../molecules/GroupCards";
 import GraphicGroup from "../molecules/GraphicGroup";
 import { getOneMesaure, getDataGraph, getProbability } from "../../api/routes";
@@ -18,11 +17,7 @@ function BodyDashboard() {
         const graphData = await getDataGraph();
         const porcentaje = await getProbability()
         setprobability(porcentaje.data)
-        console.log("Estamos imprimiendo los ultimos 7 Dias")
-        console.log(graphData.data.totalPromedios)
         setDatos(graphData.data.totalPromedios)
-        console.log("Estamos imprimiendo la ultima medicion")
-        console.log(response.data)
       }catch(error){
         console.log(error)
       }
@@ -41,22 +36,29 @@ function BodyDashboard() {
             <div class="sales">
               <GroupCards
                 title={"Temperatura Corporal"}
-                info={LastData.temperature}
-                porcentaje={"81%"}
+                info={`${LastData.temperature} °C`}
+                porcentaje={ <span class="material-icons-sharp">device_thermostat</span>}
+               
               />
             </div>
             <div class="visits">
               <GroupCards
-                title={"Pulsaciones por minuto"}
-                info={LastData.heart_rate}
-                porcentaje={"21%"}
+                title={"Frecuencia cardiaca"}
+                info={`${LastData.heart_rate} PPM`}
+                porcentaje={ <span class="material-symbols-outlined">
+                cardiology
+                </span>}
+                
               />
             </div>
             <div class="searches">
               <GroupCards
                 title={"Oxígeno en sangre"}
-                info={LastData.blood_oxygen}
-                porcentaje={"48%"}
+                info={`${LastData.blood_oxygen} %`}
+                porcentaje={ <span class="material-symbols-outlined">
+                spo2
+                </span>}
+              
               />
             </div>
           </div>

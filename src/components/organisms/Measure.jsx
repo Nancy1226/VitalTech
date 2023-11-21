@@ -3,6 +3,7 @@ import io from "socket.io-client";
 import { insertVital } from "../../api/routes";
 import styled from "styled-components";
 import Modal from "../molecules/Modal";
+import Swal from 'sweetalert2';
 
 function Measure() {
     const arrayPPM = [];
@@ -19,7 +20,7 @@ function Measure() {
 
    
     const socket = io("wss://websocket-server.testsoftware.dev:3000");
-
+    
     useEffect(() => {
         // Manejar eventos de conexión
         socket.on("connect", () => {
@@ -61,7 +62,7 @@ function Measure() {
         arrayTemp.push(newData);
         });
  
-    const iniciar = async() => {
+    const iniciar = () => {
         try {
 
             if (!connected) {
@@ -156,7 +157,7 @@ function Measure() {
                         
                         const numeroAleatorio = obtenerNumeroAleatorio(60, 110);
 
-                        frecu = numeroAleatorio
+                        frecu = Math.round(numeroAleatorio)
 
                         setpromedioPPM(numeroAleatorio)
                         const data = {
@@ -168,18 +169,19 @@ function Measure() {
                            "create_at": fechaActual
                        }
 
-                      insertar(data)
+                       insertDB(data)
+                       .then(() => {
+                         console.log("Inserción exitosa");
+                       })
+                       .catch((error) => {
+                         console.error("Error durante la inserción:", error);
+                       });
 
-                      async function insertar(data){
-                        try{
-                          const response = await insertVital(data)
-                          console.log("Imrpimiendo la respues de la insercion")
-                          console.log(response);
-                      }catch(error){
-                          console.log(error);
-                      }
-                      }
-                        
+                      console.log("Imprimiendo la data dentro del if")
+                      console.log(data)
+
+                    
+
                       }
 
                       const data = {
@@ -191,23 +193,27 @@ function Measure() {
                          "create_at": fechaActual
                      }
 
-                      insertar(data)
-
-                      async function insertar(data){
-                        try{
-                          const response = await insertVital(data)
-                          console.log("Imrpimiendo la respues de la insercion")
-                          console.log(response);
-                      }catch(error){
-                          console.log(error);
-                      }
-                      }
+                     insertDB(data)
+                     .then(() => {
+                       console.log("Inserción exitosa");
+                     })
+                     .catch((error) => {
+                       console.error("Error durante la inserción:", error);
+                     });
 
                       console.log("Imprimiendo la data")
                       console.log(data)
 
+                    
+
                   }, 45000);
             } else {
+              Swal.fire({
+                icon: "error",
+                title: "Error...",
+                text: "Intente de nuevo",
+                footer: 'Aun no se ha podido establecer conexión con el dispositivo'
+              });
                 console.error('El socket no está conectado.');
             }
         } catch (error) {
