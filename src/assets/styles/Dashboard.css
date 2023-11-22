@@ -814,3 +814,13 @@ main .recent-orders a{
     z-index: 1000;
     flex-basis: 35%;
 }
+
+.container-graphics{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.h3-pro{
+    color: rgb(139, 134, 134)
+}
