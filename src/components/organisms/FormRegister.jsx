@@ -78,10 +78,9 @@ function FormRegister() {
               }}
               onSubmit={async (valores, { resetForm  }) => {
                 //funcion para enviar el forumario
-                if(captcha.current.getValue()){
-                  console.log("El usuario no es un robot")
+                
 
-                  const emailAddress = valores.email;
+                const emailAddress = valores.email;
                 apiEmail(emailAddress)
                 .then((response) => {
                   const responseData = response.data;
@@ -95,6 +94,8 @@ function FormRegister() {
                       password: valores.password
                     }
                     
+                    if(captcha.current.getValue()){
+                      console.log("El usuario no es un robot")
                       createUser(objectDataFront)
                       .then((signupResponse) => {
                           resetForm();
@@ -127,6 +128,14 @@ function FormRegister() {
                           footer: 'Si el problema persiste intentelo mas tarde'
                         });
                       });
+                    }else{
+                      console.log("Por favor acepta el captcha")
+                      Swal.fire({
+                        icon: "error",
+                        title: "Error...",
+                        text: "Por favor complete el captcha",
+                      });
+                    }
                   } else if (responseData.smtpCheck === "false") {
                     Swal.fire({
                       icon: "error",
@@ -135,14 +144,6 @@ function FormRegister() {
                     });
                   }
                 });
-                }else{
-                  console.log("Por favor acepta el captcha")
-                  Swal.fire({
-                    icon: "error",
-                    title: "Error...",
-                    text: "Por favor complete el captcha",
-                  });
-                }
               }}
             >
               {({
