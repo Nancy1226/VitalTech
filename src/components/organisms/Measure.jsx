@@ -19,11 +19,16 @@ function Measure() {
     const [promedioPPM, setpromedioPPM] = useState(0)
     const [sistolica, setsistolica] = useState(0)
     const [diastolica, setdiastolica] = useState(0)
-
+    const [usuario, setUsuario] = useState([])
    
     const socket = io("wss://websocket-server.testsoftware.dev:3000");
     
     useEffect(() => {
+      const storedUserData = JSON.parse(localStorage.getItem('loggedUser'));
+      let {user} = storedUserData
+      setUsuario(user);
+
+
         // Manejar eventos de conexión
         socket.on("connect", () => {
           console.log("Conectado al servidor WebSocket");
@@ -169,7 +174,7 @@ function Measure() {
                            "diastolic_pressure": dis,
                            "blood_oxygen": oxigeno,
                            "create_at": fechaActual,
-                           "id_user": userName.user.id_user
+                           "id_user": usuario.id_user
                        }
 
                        insertDB(data)
@@ -180,10 +185,6 @@ function Measure() {
                          console.error("Error durante la inserción:", error);
                        });
 
-                      console.log("Imprimiendo la data dentro del if")
-                      console.log(data)
-
-                    
 
                       }
 
@@ -194,7 +195,7 @@ function Measure() {
                          "diastolic_pressure": dis,
                          "blood_oxygen": oxigeno,
                          "create_at": fechaActual,
-                         "id_user": userName.user.id_user
+                         "id_user": usuario.id_user
                      }
 
                      insertDB(data)
@@ -205,8 +206,7 @@ function Measure() {
                        console.error("Error durante la inserción:", error);
                      });
 
-                      console.log("Imprimiendo la data")
-                      console.log(data)
+                      
 
                     
 
