@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {useContext} from "react";
 import UserContext from '../../context/UserContext';
 import '../../assets/styles/Dashboard.css'
@@ -6,10 +6,20 @@ import { images } from '../../images/images';
 
 
 function DarkSection() {
-    const {userName, setUserName} = useContext(UserContext);
-    const {setIsLoged} = useContext(UserContext);
     const [darkModeActive, setDarkModeActive] = useState(false);
     const [isMenuVisible, setMenuVisible] = useState(false);
+
+    const [user, setUser] = useState([])
+
+    useEffect(() => {
+      const storedUserData = JSON.parse(localStorage.getItem('loggedUser'));
+      if (storedUserData) {
+        let {user} = storedUserData
+        console.log("imprimiendo el obj user")
+        console.log(user)
+        setUser(user)
+      }
+    }, []);
 
   const handleDarkModeToggle = () => {
     setDarkModeActive(!darkModeActive);
@@ -57,7 +67,7 @@ function DarkSection() {
             <div class="profile">
               <div class="info">
                 <p>
-                  Hola, <b>{userName.user.userName}</b>
+                  Hola, <b>{user.userName}</b>
                 </p>
                 <small class="text-muted">Usuario</small>
               </div>

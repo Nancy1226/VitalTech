@@ -15,11 +15,17 @@ function HistorySection() {
   const [showExportButton, setShowExportButton] = useState(true);
   const [activoIMG, setactivoIMG] = useState(false)
 
+  const [usuario, setUsuario] = useState([])
+
   useEffect(() => {
 
+    
     async function obtener (){
       try{
-        const response = await getAllVital(userName.user.id_user)
+        const storedUserData = JSON.parse(localStorage.getItem('loggedUser'));
+        let {user} = storedUserData
+        setUsuario(user)
+        const response = await getAllVital(user.id_user)
         console.log("Estamos imprimiendo los datos que vienen")
         console.log(response.data)
         setsignos(response.data)
@@ -71,7 +77,7 @@ function HistorySection() {
         <div className='datos-paciente'>
           <div>
             <h2>Datos del paciente</h2>
-            <h3>Nombre: {userName.user.userName}</h3>
+            <h3>Nombre: {usuario.userName}</h3>
           </div>
           {showExportButton && (
           <StyledButton onClick={generatePDF}><img src={pdfPNG} style={

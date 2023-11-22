@@ -14,14 +14,15 @@ function BodyDashboard() {
 
     async function obtener (){
       try{
-
-        const response = await getOneMesaure(userName.user.id_user)
+        const storedUserData = JSON.parse(localStorage.getItem('loggedUser'));
+        let {user} = storedUserData
+        const response = await getOneMesaure(user.id_user)
         setLastData(response.data)
         let {temperature} = response.data
         console.log("Imprimineod el serponse de las cartas:")
         console.log(temperature)
-        const graphData = await getDataGraph(userName.user.id_user);
-        const porcentaje = await getProbability(userName.user.id_user)
+        const graphData = await getDataGraph(user.id_user);
+        const porcentaje = await getProbability(user.id_user)
         setprobability(porcentaje.data)
         setDatos(graphData.data.totalPromedios)
       }catch(error){
