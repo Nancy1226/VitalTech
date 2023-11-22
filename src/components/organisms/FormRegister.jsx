@@ -80,11 +80,8 @@ function FormRegister() {
                 //funcion para enviar el forumario
                 if(captcha.current.getValue()){
                   console.log("El usuario no es un robot")
-                }else{
-                  console.log("Por favor acepta el captcha")
-                }
 
-                const emailAddress = valores.email;
+                  const emailAddress = valores.email;
                 apiEmail(emailAddress)
                 .then((response) => {
                   const responseData = response.data;
@@ -98,7 +95,6 @@ function FormRegister() {
                       password: valores.password
                     }
                     
-                   
                       createUser(objectDataFront)
                       .then((signupResponse) => {
                           resetForm();
@@ -139,6 +135,14 @@ function FormRegister() {
                     });
                   }
                 });
+                }else{
+                  console.log("Por favor acepta el captcha")
+                  Swal.fire({
+                    icon: "error",
+                    title: "Error...",
+                    text: "Por favor complete el captcha",
+                  });
+                }
               }}
             >
               {({
