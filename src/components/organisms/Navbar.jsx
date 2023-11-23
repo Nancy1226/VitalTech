@@ -16,8 +16,6 @@ function Navbar() {
         setIsLoged(false);
         setUserName("");
         const res = await logoutUser
-        console.log(res);
-        console.log("Cerrar sesion, limpiando cookie..");
         setLoading(false);
       }
 

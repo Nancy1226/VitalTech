@@ -157,37 +157,6 @@ function Measure() {
                       const fechaActual =  `${year}-${month}-${day}`;
 
 
-                      if(frecu == 0) {
-                        function obtenerNumeroAleatorio(min, max) {
-                          return Math.random() * (max - min) + min;
-                        }
-                        
-                        const numeroAleatorio = obtenerNumeroAleatorio(60, 110);
-
-                        frecu = Math.round(numeroAleatorio)
-
-                        setpromedioPPM(numeroAleatorio)
-                        const data = {
-                          "heart_rate": frecu,
-                          "temperature": temp,
-                           "systolic_pressure": sis, 
-                           "diastolic_pressure": dis,
-                           "blood_oxygen": oxigeno,
-                           "create_at": fechaActual,
-                           "id_user": usuario.id_user
-                       }
-
-                       insertDB(data)
-                       .then(() => {
-                         console.log("Inserción exitosa");
-                       })
-                       .catch((error) => {
-                         console.error("Error durante la inserción:", error);
-                       });
-
-
-                      }
-
                       const data = {
                         "heart_rate": frecu,
                         "temperature": temp,

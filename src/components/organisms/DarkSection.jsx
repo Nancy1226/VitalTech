@@ -15,8 +15,6 @@ function DarkSection() {
       const storedUserData = JSON.parse(localStorage.getItem('loggedUser'));
       if (storedUserData) {
         let {user} = storedUserData
-        console.log("imprimiendo el obj user")
-        console.log(user)
         setUser(user)
       }
     }, []);

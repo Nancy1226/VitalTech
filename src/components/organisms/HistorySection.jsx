@@ -26,8 +26,6 @@ function HistorySection() {
         let {user} = storedUserData
         setUsuario(user)
         const response = await getAllVital(user.id_user)
-        console.log("Estamos imprimiendo los datos que vienen")
-        console.log(response.data)
         setsignos(response.data)
       }catch(error){
         console.log(error)
@@ -71,7 +69,10 @@ function HistorySection() {
     return (
       
         <>
-        <main id="content-to-pdf">
+        <main >
+          <div id="content-to-pdf">
+
+          
 
         
         <div className='datos-paciente'>
@@ -141,7 +142,7 @@ function HistorySection() {
             <img src={logo} style={{ display: 'none' }} />
           
           </div>
-
+          </div>
         </main>
         </>
       );
